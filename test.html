@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phaser Test</title>
+</head>
+<body>
+    <h1>Phaser Test Page</h1>
+    <div id="test-output"></div>
+    
+    <script src="assets/phaser.min.js"></script>
+    <script>
+        const output = document.getElementById('test-output');
+        
+        if (typeof Phaser === 'undefined') {
+            output.innerHTML = '<p style="color: red;">❌ Phaser failed to load</p>';
+        } else {
+            output.innerHTML = '<p style="color: green;">✅ Phaser loaded successfully! Version: ' + Phaser.VERSION + '</p>';
+            
+            // Try to create a simple Phaser game
+            try {
+                const config = {
+                    type: Phaser.AUTO,
+                    width: 400,
+                    height: 300,
+                    backgroundColor: '#000000',
+                    scene: {
+                        create: function() {
+                            this.add.text(200, 150, 'Phaser Works!', { 
+                                fontSize: '32px', 
+                                fill: '#ffffff' 
+                            }).setOrigin(0.5);
+                        }
+                    }
+                };
+                
+                const game = new Phaser.Game(config);
+                output.innerHTML += '<p style="color: green;">✅ Simple Phaser game created!</p>';
+            } catch (error) {
+                output.innerHTML += '<p style="color: red;">❌ Error creating game: ' + error.message + '</p>';
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+

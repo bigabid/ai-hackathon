@@ -1,0 +1,108 @@
+---
+description: This file describes how to start a new playable project by asking questions and generating additional rules based on user input.  It defines guidelines for interacting with the user and generating a game specification file.  Categories indicate when each step should be executed.
+alwaysApply: false
+---
+
+## Always apply
+
+- **Engine prompt:** When a user begins a session, ask them which
+  engine they wish to use: **PixiJS**, **Phaser**, or **none**.
+  Choose based on their answer and record the choice for rule
+  generation.
+- **Video input:** Request a link or path to a short gameplay or
+  concept video.  This will be used to extract snapshots with
+  `process-video.js` to understand the game’s look and pacing.
+- **Core concept:** Ask the user to describe the core gameplay loop in
+  one sentence (e.g. “tap to fill the bar”, “swipe to dodge
+  obstacles”).
+
+## Apply intelligently
+
+- **Additional questions:** Depending on the chosen engine and
+  concept, ask follow‑up questions:
+  - Target orientation (portrait, landscape, both).
+  - Session length (approximate seconds).  Most playable ads are
+    between 15–30 s.
+  - Primary controls (tap, hold, swipe, drag).
+  - Win/fail conditions and any scoring.
+  - Call‑to‑action copy and store URL.
+  - Visual style (flat, pixel art, 3D prerendered) and brand palette.
+  - Audio policy (muted until interaction, background music, SFX).
+
+## Apply to specific files
+
+- **`scripts/process-video.js`:** After receiving the video link,
+  download or place the video file locally and run
+  `npm run process:video -- <video-path>`.  This script will
+  extract frames into `assets/frames/`.  Use these frames to
+  visualise the game flow and reference them in the generated rules.
+- **`50-game-spec.mdc`:** Once the user has answered the questions,
+  create a new rule file in `.cursor/rules/50-game-spec.mdc` that
+  summarises the answers.  Include sections for **Game Summary**,
+  **Controls & Flow**, **Assets & Budget**, **MRAID Hooks** and
+  **Engine Tasks**.  This file will inform Cursor’s future actions.
+
+## Apply manually
+
+- **Rule generation:** Manually construct `50-game-spec.mdc` based on
+  the user’s answers.  Follow the template described above.  Do not
+  auto‑generate code here; instead, document the specification.
+- **Frame analysis:** Review the extracted frames to identify key
+  moments (e.g. intro, interaction, end).  Use them to refine the
+  game flow in the specification.  If the frames suggest a different
+  core loop than described by the user, ask clarifying questions.# Playable Intake and Rule Generation
+
+This file describes how to start a new playable project by asking
+questions and generating additional rules based on user input.  It
+defines guidelines for interacting with the user and generating a
+game specification file.  Categories indicate when each step should
+be executed.
+
+## Always apply
+
+- **Engine prompt:** When a user begins a session, ask them which
+  engine they wish to use: **PixiJS**, **Phaser**, or **none**.
+  Choose based on their answer and record the choice for rule
+  generation.
+- **Video input:** Request a link or path to a short gameplay or
+  concept video.  This will be used to extract snapshots with
+  `process-video.js` to understand the game’s look and pacing.
+- **Core concept:** Ask the user to describe the core gameplay loop in
+  one sentence (e.g. “tap to fill the bar”, “swipe to dodge
+  obstacles”).
+
+## Apply intelligently
+
+- **Additional questions:** Depending on the chosen engine and
+  concept, ask follow‑up questions:
+  - Target orientation (portrait, landscape, both).
+  - Session length (approximate seconds).  Most playable ads are
+    between 15–30 s.
+  - Primary controls (tap, hold, swipe, drag).
+  - Win/fail conditions and any scoring.
+  - Call‑to‑action copy and store URL.
+  - Visual style (flat, pixel art, 3D prerendered) and brand palette.
+  - Audio policy (muted until interaction, background music, SFX).
+
+## Apply to specific files
+
+- **`scripts/process-video.js`:** After receiving the video link,
+  download or place the video file locally and run
+  `npm run process:video -- <video-path>`.  This script will
+  extract frames into `assets/frames/`.  Use these frames to
+  visualise the game flow and reference them in the generated rules.
+- **`50-game-spec.mdc`:** Once the user has answered the questions,
+  create a new rule file in `.cursor/rules/50-game-spec.mdc` that
+  summarises the answers.  Include sections for **Game Summary**,
+  **Controls & Flow**, **Assets & Budget**, **MRAID Hooks** and
+  **Engine Tasks**.  This file will inform Cursor’s future actions.
+
+## Apply manually
+
+- **Rule generation:** Manually construct `50-game-spec.mdc` based on
+  the user’s answers.  Follow the template described above.  Do not
+  auto‑generate code here; instead, document the specification.
+- **Frame analysis:** Review the extracted frames to identify key
+  moments (e.g. intro, interaction, end).  Use them to refine the
+  game flow in the specification.  If the frames suggest a different
+  core loop than described by the user, ask clarifying questions.

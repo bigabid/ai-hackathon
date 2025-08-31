@@ -1,0 +1,94 @@
+---
+description: These guidelines apply when using **Phaser 3** to build the playable.  They help you keep the codebase organised and ensure compliance with playable ad constraints.
+alwaysApply: false
+---
+
+## Always apply
+
+- **Single Scene:** For small playables, implement the game in a
+  single Phaser scene.  Keep the scene’s `create()` method concise
+  and delegate logic to helper functions where possible.
+- **Arcade physics sparingly:** Use Phaser’s Arcade Physics only if
+  you require collision detection.  Avoid enabling unused systems
+  (e.g. MatterJS) as they increase bundle size.
+- **Visibility handling:** Pause the scene when the ad is hidden and
+  resume when visible again by listening to MRAID events in
+  `main.js`.
+
+## Apply intelligently
+
+- **Texture atlases:** Bundle sprites into a single atlas and load
+  them via `this.load.atlas()` to reduce HTTP requests and memory.
+- **Input events:** Use Phaser’s input system (`this.input.on('pointerdown')`) instead of DOM event listeners.  Debounce or throttle
+  rapid input.
+- **Minimal config:** Configure Phaser with only the features you
+  need (e.g. disable audio if you’re not using sounds).  This can
+  reduce bundle size.
+
+## Apply to specific files
+
+- **Files under `src/phaser/`:** Place your Phaser game classes and
+  helper functions here.  Export a function like `createPhaserGame()`
+  that returns a `Phaser.Game` instance.  The top‑level `main.js`
+  will call this after the user selects the engine.
+- **`main.js`:** Provide a `setupPhaser()` helper that instantiates
+  the game only when Phaser is chosen.  Keep Phaser imports
+  commented out or conditional so they do not load when not needed.
+
+## Apply manually
+
+- **Editor integration:** If using Phaser Editor, follow its
+  recommended project structure.  When copying code from a Phaser
+  template, ensure you remove unnecessary dependencies and adjust
+  asset paths.
+- **Optimisation:** Keep the game loop simple.  Use fixed time
+  steps for updates and avoid complex physics or pathfinding
+  algorithms.  Adjust resolution and scale mode for performance on
+  low‑end devices.# Phaser Rules
+
+These guidelines apply when using **Phaser 3** to build the
+playable.  They help you keep the codebase organised and ensure
+compliance with playable ad constraints.
+
+## Always apply
+
+- **Single Scene:** For small playables, implement the game in a
+  single Phaser scene.  Keep the scene’s `create()` method concise
+  and delegate logic to helper functions where possible.
+- **Arcade physics sparingly:** Use Phaser’s Arcade Physics only if
+  you require collision detection.  Avoid enabling unused systems
+  (e.g. MatterJS) as they increase bundle size.
+- **Visibility handling:** Pause the scene when the ad is hidden and
+  resume when visible again by listening to MRAID events in
+  `main.js`.
+
+## Apply intelligently
+
+- **Texture atlases:** Bundle sprites into a single atlas and load
+  them via `this.load.atlas()` to reduce HTTP requests and memory.
+- **Input events:** Use Phaser’s input system (`this.input.on('pointerdown')`) instead of DOM event listeners.  Debounce or throttle
+  rapid input.
+- **Minimal config:** Configure Phaser with only the features you
+  need (e.g. disable audio if you’re not using sounds).  This can
+  reduce bundle size.
+
+## Apply to specific files
+
+- **Files under `src/phaser/`:** Place your Phaser game classes and
+  helper functions here.  Export a function like `createPhaserGame()`
+  that returns a `Phaser.Game` instance.  The top‑level `main.js`
+  will call this after the user selects the engine.
+- **`main.js`:** Provide a `setupPhaser()` helper that instantiates
+  the game only when Phaser is chosen.  Keep Phaser imports
+  commented out or conditional so they do not load when not needed.
+
+## Apply manually
+
+- **Editor integration:** If using Phaser Editor, follow its
+  recommended project structure.  When copying code from a Phaser
+  template, ensure you remove unnecessary dependencies and adjust
+  asset paths.
+- **Optimisation:** Keep the game loop simple.  Use fixed time
+  steps for updates and avoid complex physics or pathfinding
+  algorithms.  Adjust resolution and scale mode for performance on
+  low‑end devices.

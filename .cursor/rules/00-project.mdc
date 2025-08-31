@@ -1,0 +1,121 @@
+---
+description: These rules apply at the repository level and establish baseline constraints and workflows for building a playable advertisement using Cursor.  They are organised into categories according to how they should be applied.
+alwaysApply: false
+---
+
+## Always apply
+
+- **Stay lightweight:** Aim for a total bundle under a few megabytes.
+  Keep dependencies to a minimum and inline assets whenever possible.
+- **Single file output:** Deliver your playable as a single HTML file
+  (see the build script in `/scripts/build-inline.js`).
+- **MRAID readiness:** Wait for the `mraid.ready` event before
+  starting interactive logic and use `mraid.open()` for call‑to‑action
+  events. Never call `window.top` or `location.href` inside the ad.
+- **Secure URLs:** Only use `https://` for all resources and links.
+- **No external network calls:** Inline fonts, images and scripts; do
+  not fetch remote resources at runtime.
+
+## Apply intelligently
+
+- **Engine choice:** Choose your rendering engine (PixiJS, Phaser or
+  none) based on the complexity of your concept. Use PixiJS for
+  high‑performance sprite rendering and Phaser for full game
+  scaffolding. Skip the engine for very simple interactions.
+- **Intake flow:** When starting a new playable, collect information
+  about the game concept, video reference, controls and target
+  orientation (see `05-intake.mdc`).  Use these answers to guide
+  implementation and rule generation.
+- **Pause and resume:** Listen for MRAID `stateChange` and
+  `viewableChange` events to pause animations when the ad is not
+  visible and resume when viewable again.
+- **Progressive enhancement:** If an engine is unavailable (e.g.
+  preview in browser), fall back gracefully to plain JavaScript.
+
+## Apply to specific files
+
+- **`index.html`:** Include the `<meta name="ad.orientation">` tag to
+  specify the supported orientation (`portrait`, `landscape` or
+  `both`).  This file is the root of your ad; link to your styles
+  and scripts here before building.
+- **`main.js`:** Detect MRAID via `window.mraid`, wait for `ready`,
+  and wire up user interactions.  Avoid global variables by
+  encapsulating code in an IIFE or module.
+- **`scripts/process-video.js`:** Use this script to extract
+  representative frames from a source video.  The output will be
+  stored in `assets/frames` for later reference.
+
+## Apply manually
+
+- **User input:** When the user provides a concept or video link,
+  consult them for additional details (core loop, controls, session
+  length, palette and audio policy).  Update the rules in
+  `.cursor/rules/50-game-spec.mdc` accordingly.
+- **Video processing:** Download the video locally and run
+  `npm run process:video -- <path-to-video>` to generate frames.
+  Use these frames to understand the key beats of the game and
+  design your playable.
+- **Build and test:** Run `npm run build:inline` to produce
+  `dist/index.html`, then upload this single file to a MRAID web
+  tester to ensure it meets all requirements.# Project‑Wide Guidelines
+
+These rules apply at the repository level and establish baseline
+constraints and workflows for building a playable advertisement using
+Cursor.  They are organised into categories according to how they
+should be applied.
+
+## Always apply
+
+- **Stay lightweight:** Aim for a total bundle under a few megabytes.
+  Keep dependencies to a minimum and inline assets whenever possible.
+- **Single file output:** Deliver your playable as a single HTML file
+  (see the build script in `/scripts/build-inline.js`).
+- **MRAID readiness:** Wait for the `mraid.ready` event before
+  starting interactive logic and use `mraid.open()` for call‑to‑action
+  events. Never call `window.top` or `location.href` inside the ad.
+- **Secure URLs:** Only use `https://` for all resources and links.
+- **No external network calls:** Inline fonts, images and scripts; do
+  not fetch remote resources at runtime.
+
+## Apply intelligently
+
+- **Engine choice:** Choose your rendering engine (PixiJS, Phaser or
+  none) based on the complexity of your concept. Use PixiJS for
+  high‑performance sprite rendering and Phaser for full game
+  scaffolding. Skip the engine for very simple interactions.
+- **Intake flow:** When starting a new playable, collect information
+  about the game concept, video reference, controls and target
+  orientation (see `05-intake.mdc`).  Use these answers to guide
+  implementation and rule generation.
+- **Pause and resume:** Listen for MRAID `stateChange` and
+  `viewableChange` events to pause animations when the ad is not
+  visible and resume when viewable again.
+- **Progressive enhancement:** If an engine is unavailable (e.g.
+  preview in browser), fall back gracefully to plain JavaScript.
+
+## Apply to specific files
+
+- **`index.html`:** Include the `<meta name="ad.orientation">` tag to
+  specify the supported orientation (`portrait`, `landscape` or
+  `both`).  This file is the root of your ad; link to your styles
+  and scripts here before building.
+- **`main.js`:** Detect MRAID via `window.mraid`, wait for `ready`,
+  and wire up user interactions.  Avoid global variables by
+  encapsulating code in an IIFE or module.
+- **`scripts/process-video.js`:** Use this script to extract
+  representative frames from a source video.  The output will be
+  stored in `assets/frames` for later reference.
+
+## Apply manually
+
+- **User input:** When the user provides a concept or video link,
+  consult them for additional details (core loop, controls, session
+  length, palette and audio policy).  Update the rules in
+  `.cursor/rules/50-game-spec.mdc` accordingly.
+- **Video processing:** Download the video locally and run
+  `npm run process:video -- <path-to-video>` to generate frames.
+  Use these frames to understand the key beats of the game and
+  design your playable.
+- **Build and test:** Run `npm run build:inline` to produce
+  `dist/index.html`, then upload this single file to a MRAID web
+  tester to ensure it meets all requirements.

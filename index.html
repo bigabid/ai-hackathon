@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- The ad host will inject mraid.js in production. -->
+  <script src="mraid.js"></script>
+  <!-- Specify supported orientations: portrait | landscape | both -->
+  <meta name="ad.orientation" content="both" />
+  <title>Golden Pharaoh Slot Machine</title>
+  <!-- Inline styles will be injected by build script; keep this link for dev -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Phaser 3 local file for development (will be bundled in production) -->
+  <script src="assets/phaser.min.js"></script>
+  <!-- Inline scripts will be injected by build script; keep this script for dev -->
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <div id="app" class="wrap">
+    <!-- Loading Screen -->
+    <section id="screen-loading" class="screen active">
+      <div class="loading-content">
+        <h1 class="game-title">Golden Pharaoh</h1>
+        <div class="loading-spinner"></div>
+        <p>Loading Ancient Riches...</p>
+      </div>
+    </section>
+
+    <!-- Game Canvas Container -->
+    <section id="screen-game" class="screen">
+      <div id="game-container"></div>
+    </section>
+
+    <!-- End Game / CTA Screen -->
+    <section id="screen-end" class="screen">
+      <div class="end-content">
+        <h2>Your Fortune Awaits!</h2>
+        <div class="final-score">
+          <span class="score-label">Final Score:</span>
+          <span id="final-score" class="score-value">0</span>
+        </div>
+        <button id="btn-cta" class="cta-button">DOWNLOAD GAME</button>
+        <p class="cta-subtitle">Find this game on the store</p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
