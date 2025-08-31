@@ -10,6 +10,7 @@ Create a clear, actionable PRD in Markdown that a junior developer can implement
 - Sequential questioning: ask one question at a time and wait for the user's answer before proceeding to the next.
 - MVP-first discovery: target at most 20 questions to reach an MVP-quality PRD; if information is still missing at 20, ask the user to either continue or allow autofill with sensible defaults.
 - Docker-first MVP: prefer an all-in-one Docker + Docker Compose setup for demo/PoC; also note a path to production hardening.
+- IDE & MCP readiness: recommend a minimal set of VSCode/JetBrains extensions and MCP rules to accelerate implementation and validation.
 - Prefer popular/high-score community resources when adding rules or integrations.
 - Keep output skimmable: consistent headings, bullets, and numbered requirements.
 - Single source of truth: save in `/tasks/` with stable, discoverable filenames.
@@ -35,6 +36,10 @@ Create a clear, actionable PRD in Markdown that a junior developer can implement
    - Reflect Docker-first MVP deployment (single docker-compose) and note a production path at a high level.
    - If services are required (DB, storage, server), specify Docker/Compose setup in Technical Considerations.
    - If code generation is expected, include a note to add curated MCP rule files based on popular/high-score sources (e.g., awesome-cursorrules, cursor.directory).
+4. Milestone validation (execution checkpoint)
+   - After each major milestone (e.g., scaffolding, auth, CRUD, uploads), ensure the app runs locally via Docker Compose.
+   - Use an MCP browser automation tool (e.g., Browser MCP) to smoke-test key flows before committing large changes.
+   - Only proceed to the next task when the smoke checks are green.
 4. Confirm unknowns
    - Add any remaining questions under “Open Questions”.
 5. Save
@@ -97,6 +102,16 @@ Create a clear, actionable PRD in Markdown that a junior developer can implement
 - Markdown is diff-friendly and portable.
 - `/tasks/` centralizes planning artifacts.
 - Stable naming allows automated tooling and easy linking.
+
+## IDE Extensions and MCP Rules (Recommendations)
+
+- VSCode/JetBrains Extensions (prefer popular/high-score):
+  - ESLint, Prettier, Tailwind CSS IntelliSense, Prisma, Docker, GitHub Actions.
+  - REST Client or Thunder Client for quick API checks.
+- MCP Rules/Tools:
+  - Browser MCP for automated UI smoke tests and end-to-end checks before commits (see `https://browsermcp.io/`).
+  - Project-specific rules for Next.js/TypeScript, lint/format, testing, and task execution from curated sources (awesome-cursorrules, cursor.directory).
+  - Prefer well-maintained, high-score entries; document chosen rules under `/​.cursor/rules/`.
 
 ## Final Instructions
 
