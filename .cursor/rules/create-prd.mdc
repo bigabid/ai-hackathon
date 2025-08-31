@@ -1,0 +1,136 @@
+# Rule: Generating a Product Requirements Document (PRD)
+
+## Goal
+
+Create a clear, actionable PRD in Markdown that a junior developer can implement confidently, with enough context for reviewers to align quickly.
+
+## Principles (Cursor Best Practices)
+
+- Ask before you write: collect missing details via concise, numbered questions.
+- Sequential questioning: ask one question at a time and wait for the user's answer before proceeding to the next.
+- MVP-first discovery: target at most 20 questions to reach an MVP-quality PRD; if information is still missing at 20, ask the user to either continue or allow autofill with sensible defaults.
+- Keep output skimmable: consistent headings, bullets, and numbered requirements.
+- Single source of truth: save in `/tasks/` with stable, discoverable filenames.
+- Write for implementation: clarify scope, success, and acceptance up front.
+- Iterate: refine the draft after user answers; avoid premature “how”.
+
+### Why
+- Reduces back-and-forth during implementation.
+- Improves searchability and review velocity.
+- Prevents scope creep and ambiguity.
+
+## Process
+
+1. Receive prompt
+   - Capture the problem and desired outcome in 1–2 sentences.
+2. Ask clarifying questions (numbered for quick replies)
+   - Sequential flow: ask one question, pause for the user's reply, then continue with the next question.
+   - Provide multiple-choice options when possible; include an “Other” option.
+   - Cap at 20 questions for MVP. If insufficient detail remains, offer: (a) continue with more questions, or (b) proceed by autofilling standard defaults and clearly marking them.
+   - Include a dedicated Technical Considerations question near the end (stack, languages, frameworks, hosting, CI/CD, code style, linter/formatter, testing).
+3. Draft the PRD (see structure below)
+   - Keep functional requirements numbered and testable.
+4. Confirm unknowns
+   - Add any remaining questions under “Open Questions”.
+5. Save
+   - Save as `prd-[feature-name].md` in `/tasks/` using kebab-case.
+6. Iterate
+   - When the user answers, update the PRD accordingly and re-save.
+
+### Why
+- Questions first avoids rework.
+- Numbering requirements simplifies traceability to tasks and tests.
+- Consistent naming enables easy discovery and linking.
+
+## Clarifying Questions (Examples)
+
+- Problem/Goal: What problem are we solving? What outcome defines success?
+- Target User: Who primarily uses this feature?
+- Core Functionality: What actions must be possible?
+- User Stories: Provide 2–4 stories (As a … I want … so that …).
+- Acceptance Criteria: How do we confirm it works? (testable statements)
+- Scope/Boundaries: What is explicitly out of scope?
+- Data: What data is displayed, captured, or mutated? Any sources?
+- Design/UI: Any mocks, components, or style guidelines to follow?
+- Edge Cases: What unusual scenarios or error states matter?
+- Technical Considerations: Preferred stack (frontend/backend/DB), programming language(s), frameworks, hosting, CI/CD, code style, linter/formatter, and testing strategy.
+
+### Why
+- Ensures completeness without dictating implementation details.
+
+## PRD Structure
+
+1. Introduction/Overview
+   - 2–4 sentences summarizing problem, users, and intended outcome.
+2. Goals
+   - 3–6 measurable objectives (bulleted); prefer outcome metrics.
+3. User Stories
+   - 2–6 stories in the canonical format.
+4. Functional Requirements
+   - Numbered, testable statements (FR-1, FR-2, …). Prefer “must”.
+5. Non-Goals (Out of Scope)
+   - Short bulleted list to protect scope.
+6. Design Considerations (Optional)
+   - Link mocks, components, layout notes, accessibility expectations.
+7. Technical Considerations (Optional)
+   - Key dependencies, data sources, performance constraints, feature flags.
+8. Success Metrics
+   - Quantitative where possible; define measurement method.
+9. Open Questions
+   - List unknowns; keep current until resolved.
+
+### Why
+- Clear structure enables straightforward task generation and review.
+
+## Output
+
+- Format: Markdown (`.md`)
+- Location: `/tasks/`
+- Filename: `prd-[feature-name].md`
+
+### Why
+- Markdown is diff-friendly and portable.
+- `/tasks/` centralizes planning artifacts.
+- Stable naming allows automated tooling and easy linking.
+
+## Final Instructions
+
+1. Do not start implementation here; avoid code or API designs unless required by clarity.
+2. Ask clarifying questions before writing the PRD when details are missing.
+3. After receiving answers, update the PRD to resolve open questions and tighten requirements.
+
+## Starter Template
+
+```markdown
+# [Feature Name] — PRD
+
+## Introduction/Overview
+Brief description of the problem, target users, and intended outcome.
+
+## Goals
+- Goal 1 (measurable)
+- Goal 2 (measurable)
+
+## User Stories
+- As a [user], I want [action], so that [benefit].
+- As a [user], I want [action], so that [benefit].
+
+## Functional Requirements
+- FR-1: The system must …
+- FR-2: The system must …
+
+## Non-Goals (Out of Scope)
+- Not included: …
+
+## Design Considerations (Optional)
+- Links to mocks/components
+
+## Technical Considerations (Optional)
+- Dependencies, data sources, constraints
+
+## Success Metrics
+- Metric and measurement method
+
+## Open Questions
+- Q1: …
+```
