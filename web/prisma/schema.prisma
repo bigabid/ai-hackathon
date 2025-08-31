@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Campaign {
+  id              String    @id @default(cuid())
+  name            String
+  description     String?
+  status          CampaignStatus @default(DRAFT)
+  shareToken      String   @unique
+  publishAt       DateTime?
+  unpublishAt     DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  creatives       Creative[]
+  events          Event[]
+}
+
+model Creative {
+  id          String   @id @default(cuid())
+  campaignId  String
+  type        CreativeType
+  src         String
+  posterSrc   String?
+  width       Int?
+  height      Int?
+  durationSec Int?
+  weight      Int      @default(1)
+  status      CreativeStatus @default(ACTIVE)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  campaign    Campaign @relation(fields: [campaignId], references: [id])
+  events      Event[]
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  campaignId  String
+  creativeId  String
+  sessionId   String
+  type        EventType
+  createdAt   DateTime @default(now())
+  campaign    Campaign @relation(fields: [campaignId], references: [id])
+  creative    Creative @relation(fields: [creativeId], references: [id])
+  @@index([campaignId, creativeId])
+  @@index([sessionId])
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  createdAt    DateTime @default(now())
+  lastLoginAt  DateTime?
+}
+
+enum CampaignStatus {
+  DRAFT
+  PUBLISHED
+  SCHEDULED
+}
+
+enum CreativeType {
+  IMAGE
+  VIDEO
+  HTML5
+}
+
+enum CreativeStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum EventType {
+  IMPRESSION
+  LIKE
+  SUPERLIKE
+  DISLIKE
+  SKIP
+  UNDO
+}
