@@ -19,6 +19,8 @@ This rule provides the comprehensive workflow for planning and executing project
 
 ## 📋 **Phase 0: Project Planning**
 
+Do not skip steps. Require explicit user confirmation (reply "Go") before proceeding to the next step.
+
 ### Step 1: Create PRD (Product Requirements Document)
 **CRITICAL**: When user references project planning:
 1. **NEVER write a PRD immediately** - start with clarifying questions
@@ -72,6 +74,9 @@ TS10: Testing focus?
   a) Unit (Vitest/Jest)  b) E2E (Playwright/Cypress)  c) API (Supertest)  d) Accessibility (axe/playwright-a11y)  e) All of the above  f) Choose for me
 ```
 
+Pause/Confirm
+- Ask: "Proceed to Step 2: Generate Task List? Reply 'Go' to continue or 'Adjust PRD' to iterate."
+
 ### Step 2: Generate Task List
 **Process**:
 1. Generate 5-10 **parent tasks** covering full implementation
@@ -92,6 +97,9 @@ TS10: Testing focus?
   - [ ] 3.1 Error handling
   - [ ] 3.2 Performance optimization
 ```
+
+Pause/Confirm
+- Ask: "Proceed to Step 3: Import and tailor rules? Reply 'Go' to continue or 'Revise tasks' to iterate."
 
 ### Step 3: Import and tailor rules from `@rules-directory/`
 After the tech stack is chosen, import relevant curated rules from `@rules-directory/`, copy them into `.cursor/rules/`, and edit to fit the project.
@@ -143,7 +151,12 @@ Why
 - Ensures rules are actionable, scoped, and automatically applied where relevant.
 - Aligns with Cursor best practices for rule anatomy, nested rules, and reusability.
 
+Pause/Confirm
+- Ask: "Proceed to Phase 1 (POC Development)? Reply 'Go' to start or 'Adjust rules' to refine."
+
 ## 🚀 **Phase 1: POC Development**
+
+Do not begin until Step 3 is confirmed with a "Go" reply.
 
 ### Technology Stack (from @memory.mdc)
 **Default Stack**:
@@ -178,6 +191,8 @@ src/
 
 ## 🎨 **Phase 2: Demo Enhancement**
 
+Do not begin until Phase 1 success criteria are met and the user replies "Go".
+
 ### Demo Priorities
 1. ✅ **Realistic Data** - Sample data representing real use cases
 2. ✅ **Smooth Interactions** - Animations and transitions
@@ -194,6 +209,8 @@ src/
 - [ ] Basic test coverage
 
 ## 🏭 **Phase 3: Production Ready**
+
+Do not begin until Phase 2 success criteria are met and the user replies "Go".
 
 ### Production Priorities
 1. ✅ **Error Handling** - Comprehensive error handling and recovery
