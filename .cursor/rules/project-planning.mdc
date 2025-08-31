@@ -1,6 +1,6 @@
 ---
 description: Complete project planning workflow from PRD creation to task execution with POC-first development methodology
-globs: ["tasks/**/*.md", "*.md"]
+globs: ["tasks/**/*.mdc", "*.mdc"]
 alwaysApply: false
 ---
 
@@ -23,8 +23,9 @@ This rule provides the comprehensive workflow for planning and executing project
 **CRITICAL**: When user references project planning:
 1. **NEVER write a PRD immediately** - start with clarifying questions
 2. **Sequential questioning** - ask one question, wait for answer
-3. **Max 20 questions** for MVP scope
-4. **Save as** `tasks/prd-[feature-name].md`
+3. **Multple answer questions** - choose a,b,c,d ... or choose for me
+4. **Max 10 questions** for MVP scope, after 10 questions, ask the user if he wants to continue with the next 10 questions or let AI answer for him.
+5. **Save as** `tasks/prd-[feature-name].md`
 
 **Example Questions Flow**:
 ```
@@ -34,6 +35,41 @@ Q3: What's the core user flow?
 Q4: What defines success?
 ...
 Q20: Any technical constraints?
+```
+
+#### Technology Stack Discovery Questions (sequential, multiple-choice)
+Ask one at a time. After 10, ask to continue or choose defaults. If unsure, the user can reply "choose for me" to use recommended defaults.
+
+```
+TS1: Frontend framework?
+  a) React  b) Vue  c) Svelte  d) None/Vanilla  e) Other  f) Choose for me
+
+TS2: Language and typing?
+  a) TypeScript  b) JavaScript (ES2022+)  c) Both (gradual TS)  d) Other  e) Choose for me
+
+TS3: Rendering/application style?
+  a) Next.js (SSR/SSG)  b) SPA (Vite)  c) Static site  d) Other  e) Choose for me
+
+TS4: State and data fetching?
+  a) React Query/SWR  b) Redux Toolkit  c) Zustand/Context  d) None (local state)  e) Other  f) Choose for me
+
+TS5: Styling/UI?
+  a) Tailwind CSS  b) CSS-in-JS (Styled/Emotion)  c) Component lib (MUI/Chakra/Ant)  d) CSS/Sass  e) Other  f) Choose for me
+
+TS6: Backend/runtime?
+  a) Node.js + Express/Fastify/Nest  b) Python + Flask/FastAPI/Django  c) No backend (static/API-as-a-service)  d) Other  e) Choose for me
+
+TS7: API protocol?
+  a) REST  b) GraphQL  c) tRPC  d) gRPC  e) Other  f) Choose for me
+
+TS8: Database/storage?
+  a) Postgres  b) MySQL  c) MongoDB  d) Serverless (Dynamo/Firestore/KV/Blob)  e) Other  f) Choose for me
+
+TS9: Cloud/deploy target?
+  a) Vercel/Netlify  b) AWS  c) GCP  d) Azure  e) On‑prem  f) Other  g) Choose for me
+
+TS10: Testing focus?
+  a) Unit (Vitest/Jest)  b) E2E (Playwright/Cypress)  c) API (Supertest)  d) Accessibility (axe/playwright-a11y)  e) All of the above  f) Choose for me
 ```
 
 ### Step 2: Generate Task List
@@ -57,29 +93,55 @@ Q20: Any technical constraints?
   - [ ] 3.2 Performance optimization
 ```
 
-### Step 3: Self-Add Specialized Rules
-**Agent should automatically add relevant rules based on project type**:
+### Step 3: Import and tailor rules from `@rules-directory/`
+After the tech stack is chosen, import relevant curated rules from `@rules-directory/`, copy them into `.cursor/rules/`, and edit to fit the project.
 
-```javascript
-// Agent decision logic for rule addition
-// Add domain-specific rules as appropriate for the project.
-// Example: web apps, services, data pipelines, etc.
+1. Locate relevant rules
+   - Examples: `react.mdc`, `typescript.mdc`, `tailwind.mdc`, `python.mdc`, `rust.mdc`.
+2. Copy into project rules
+   - Place in `.cursor/rules/` at the project root or use nested rules in subprojects (see below).
+3. Edit MDC header (Rule anatomy)
+   - `description`: Clear, concise purpose for when to apply this rule.
+   - `globs`: Scope to file patterns that should auto-attach (e.g., `["web/**/*.tsx", "*.tsx"]`).
+   - `alwaysApply`: `true` only for essentials; otherwise `false` and rely on globs or manual attach.
+4. Choose rule type (per Cursor docs)
+   - Always: Always included in context.
+   - Auto Attached: Included when files matching `globs` are referenced.
+   - Agent Requested: Available; AI decides whether to include (must have `description`).
+   - Manual: Only included when explicitly mentioned via `@ruleName`.
+5. Keep rules focused
+   - Keep under 500 lines; split into multiple composable rules if needed. Provide concrete examples and referenced files.
 
-if (projectType.includes('react') || projectType.includes('web-app')) {
-  addRule('@code-developer.mdc');
-}
+Nested rules (auto attach by directory)
+Organize rules by placing `.cursor/rules` in relevant folders. Rules inside these folders auto-attach when files in that directory are referenced.
 
-if (hasTestingRequirements) {
-  addRule('@testing-patterns.mdc');
-}
-
-// Always add for any code project
-addRule('@memory.mdc'); // User preferences and conventions
+```
+project/
+  .cursor/rules/                 # Project-wide rules
+  frontend/
+    .cursor/rules/               # Frontend-specific rules (e.g., React, Tailwind)
+  backend/
+    .cursor/rules/               # Backend-specific rules (e.g., Node, Python)
 ```
 
-**MCP Rules Integration**:
-- **If code generation expected**, add note to include curated MCP rule files from awesome-cursorrules, cursor.directory
-- **Add specialized rules** for domain-specific patterns (e.g., performance, realtime systems, data pipelines)
+Example: Tailoring a copied rule
+
+```md
+---
+description: React component standards for web frontend
+globs: ["web/**/*.tsx", "*.tsx"]
+alwaysApply: false
+---
+
+- Use functional components and hooks.
+- Co-locate tests: `Component.tsx` with `Component.test.tsx`.
+- Prefer Tailwind for styling; avoid inline styles.
+- Export prop types; keep components pure and presentational where possible.
+```
+
+Why
+- Ensures rules are actionable, scoped, and automatically applied where relevant.
+- Aligns with Cursor best practices for rule anatomy, nested rules, and reusability.
 
 ## 🚀 **Phase 1: POC Development**
 

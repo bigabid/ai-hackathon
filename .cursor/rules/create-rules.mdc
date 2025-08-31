@@ -1,0 +1,24 @@
+---
+description: This rule explains how to create new .mdc project rule files for the Cursor agent.
+alwaysApply: false
+---
+# Rule Title
+
+Main content explaining the rule with markdown formatting.
+
+1. Step-by-step instructions
+2. Code examples
+3. Guidelines
+
+Example:
+```typescript
+// Good example
+function goodExample() {
+  // Implementation following guidelines
+}
+
+// Bad example
+function badExample() {
+  // Implementation not following guidelines
+}
+```
