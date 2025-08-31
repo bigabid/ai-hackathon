@@ -100,6 +100,10 @@ Make `1.0 Project setup` the first parent task. Keep PRD content separate in Ste
 - Import and tailor curated rules per Step 3 (do not restate details here).
 - Baseline README and scripts; use commands listed under "Development Commands".
 - Create minimal directory scaffolding per "File Structure" in Phase 1.
+- Set up VS Code configuration:
+  - Create `.vscode` directory with:
+    - `launch.json` for debugging configurations (Next.js, tests, etc.)
+    - `tasks.json` for common development tasks (build, test, lint)
 - Ensure `tasks/prd-[feature-name].md` and `tasks/tasks-[feature-name].md` exist with scaffolds.
 - Optional: CI skeleton and deployment preview links (reference your team standards).
 
@@ -125,7 +129,8 @@ Make `1.0 Project setup` the first parent task. Keep PRD content separate in Ste
 - [ ] 1.0 Project setup
   - [ ] 1.1 Repo/tooling initialized (pnpm, linting, formatting)
   - [ ] 1.2 Curated rules imported and tailored in `.cursor/rules`
-  - [ ] 1.3 PRD and tasks scaffolds verified under `tasks/`
+  - [ ] 1.3 VS Code configuration added (.vscode/launch.json, tasks.json)
+  - [ ] 1.4 PRD and tasks scaffolds verified under `tasks/`
 - [ ] 2.0 Core Functionality (POC Phase)
   - [ ] 2.1 Basic HTML structure
   - [ ] 2.2 Core interaction working
