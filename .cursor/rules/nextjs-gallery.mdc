@@ -1,0 +1,50 @@
+---
+description: Next.js gallery application standards and patterns
+globs: ["src/**/*.{ts,tsx}", "pages/**/*.{ts,tsx}"]
+alwaysApply: false
+---
+
+# Next.js Gallery Application Standards
+
+## Project Structure
+```
+src/
+├── components/     # Reusable UI components
+│   ├── admin/     # Admin-specific components
+│   ├── gallery/   # Gallery view components
+│   └── shared/    # Shared components
+├── lib/           # Utility functions and services
+├── types/         # TypeScript type definitions
+└── styles/        # Global styles and Tailwind
+```
+
+## Component Standards
+- Use functional components with TypeScript
+- Implement proper loading states and error boundaries
+- Follow accessibility guidelines (ARIA labels, keyboard navigation)
+- Use CSS modules or Tailwind for styling
+
+## File Upload Guidelines
+- Validate file types and sizes on both client and server
+- Generate and store thumbnails for optimal performance
+- Implement proper error handling and progress indicators
+- Clean up temporary files and failed uploads
+
+## Gallery Management
+- Use optimistic updates for better UX
+- Implement proper caching strategies
+- Handle offline scenarios gracefully
+- Maintain consistent grid layouts
+
+## Security Practices
+- Validate all file uploads
+- Implement rate limiting on API routes
+- Use secure URL generation for sharing
+- Sanitize user inputs
+- Implement proper CORS policies
+
+## Testing Requirements
+- Write unit tests for utility functions
+- Create integration tests for API routes
+- Implement E2E tests for critical user flows
+- Test responsive layouts and mobile interactions

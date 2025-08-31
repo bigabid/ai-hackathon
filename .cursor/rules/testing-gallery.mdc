@@ -1,0 +1,56 @@
+---
+description: Testing standards for gallery application
+globs: ["**/*.test.{ts,tsx}", "**/*.spec.{ts,tsx}", "playwright/**/*.ts"]
+alwaysApply: false
+---
+
+# Testing Standards for Gallery Application
+
+## Unit Testing
+- Test utility functions thoroughly
+- Mock external services
+- Test error handling
+- Verify state management
+
+## Integration Testing
+- Test API endpoints
+- Verify file uploads
+- Test authentication flow
+- Check database operations
+
+## E2E Testing
+### Critical Paths
+1. Admin login flow
+2. Gallery creation and sharing
+3. File upload process
+4. Public gallery viewing
+
+### Test Requirements
+- Cross-browser testing
+- Mobile responsiveness
+- Accessibility compliance
+- Performance benchmarks
+
+## Testing Utilities
+```typescript
+// Example test helper
+export const createTestGallery = async () => {
+  // Implementation
+};
+
+export const uploadTestFile = async () => {
+  // Implementation
+};
+```
+
+## Performance Testing
+- Measure load times
+- Test image optimization
+- Verify caching
+- Monitor memory usage
+
+## Security Testing
+- Test authentication
+- Verify file validation
+- Check access controls
+- Test rate limiting

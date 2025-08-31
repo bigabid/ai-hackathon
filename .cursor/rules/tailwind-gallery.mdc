@@ -1,0 +1,58 @@
+---
+description: Tailwind CSS standards for gallery application
+globs: ["**/*.{ts,tsx,css}", "tailwind.config.js"]
+alwaysApply: false
+---
+
+# Tailwind CSS Standards for Gallery
+
+## Core Principles
+- Use utility-first approach
+- Maintain consistent spacing and sizing
+- Implement responsive design patterns
+- Follow accessibility guidelines
+
+## Gallery Grid System
+```css
+/* Example gallery grid implementation */
+.gallery-grid {
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
+}
+
+.gallery-item {
+  @apply aspect-square relative overflow-hidden rounded-lg shadow-md;
+}
+```
+
+## Common Components
+- Use consistent padding and margins
+- Implement proper hover and focus states
+- Maintain readable text contrast
+- Use proper spacing between elements
+
+## Responsive Design
+- Mobile-first approach
+- Consistent breakpoints
+- Proper touch targets
+- Flexible layouts
+
+## Animation Guidelines
+- Use smooth transitions
+- Implement loading states
+- Add hover effects
+- Handle modal transitions
+
+## Dark Mode Support
+```css
+/* Dark mode examples */
+.gallery-card {
+  @apply bg-white dark:bg-gray-800;
+  @apply text-gray-900 dark:text-gray-100;
+}
+```
+
+## Performance Considerations
+- Minimize custom CSS
+- Use proper image sizing
+- Implement lazy loading
+- Optimize for mobile devices

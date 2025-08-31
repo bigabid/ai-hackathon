@@ -1,90 +1,36 @@
-# AI Hackathon Starter
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-A batteries-included starter focused on fast PRD→POC→Demo→Production workflow with clear Cursor rules and local-first web + Docker-for-infra.
+## Getting Started
 
-## Quick Start
+First, run the development server:
 
 ```bash
-# 1) Install pnpm (if needed)
-corepack enable
-
-# 2) Install deps and run the web app locally
-pnpm install
+npm run dev
+# or
+yarn dev
+# or
 pnpm dev
-
-# 3) (Optional) Start infra services (DB/Mailpit) via Docker
-docker compose up -d
-# View service logs (replace with your service name, e.g., postgres)
-docker compose logs -f | cat
-# Stop and clean infra
-docker compose down -v
+# or
+bun dev
 ```
 
-## Project Philosophy
-- Visual first: build something users can see ASAP
-- POC → Demo → Production progression
-- Rules-backed workflow for consistency in Cursor
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Planning Workflow (Required)
-Follow the rule `@project-planning`:
-1. Create PRD via sequential questions (max 10 at a time)
-2. Generate parent tasks, then break into sub‑tasks (≤1–2 hours)
-3. Import and tailor rules from `@rules-directory/`
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Artifacts are saved under `tasks/`:
-- `tasks/prd-[feature].md`
-- `tasks/tasks-[feature].md`
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-When working the plan, use `@process-task-list` to enforce one‑task‑at‑a‑time execution.
+## Learn More
 
-## Manual E2E Validation (Before advancing milestones)
-Use `@mcp-browser-testing` to run a quick manual E2E flow with Browser MCP.
+To learn more about Next.js, take a look at the following resources:
 
-## Infrastructure Preferences
-- POC/Demo: run the web app locally; use Docker Compose only for infra (DB, Mailpit, etc.).
-- Production: prefer managed cloud infrastructure (e.g., Vercel/Netlify for frontend; AWS/GCP/Azure for services and data).
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-### Docker Files
-- `docker-compose.yml`: orchestrates infra services only (no web container)
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Minimal commands:
-```bash
-docker compose up -d
-docker compose logs -f | cat
-docker compose down -v
-```
+## Deploy on Vercel
 
-## Repo Structure
-```
-src/
-  poc/      # Phase 1: quick prototypes
-  demo/     # Phase 2: polished demos
-  core/     # Phase 3: production code
-  tests/    # Tests
-.cursor/
-  rules/    # Project rules consumed by Cursor
-rules-directory/
-  ...       # Curated rules to import/tailor
-```
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Developer Workflow
-- Create feature branches per parent task
-- Keep commits small, use Conventional Commits
-- Run tests locally with pnpm
-
-```bash
-pnpm test
-pnpm test:watch
-pnpm test:coverage
-```
-
-## Environment
-See `config/environments.js` in the planning rule for a baseline pattern. Adjust per project.
-
-## Troubleshooting
-- If Docker doesn’t start, ensure Docker Desktop is running.
-- If ports conflict, change host ports in `docker-compose.yml`.
-- For Cursor rule changes, re-open files to re-attach rules.
-
-## License
-MIT
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

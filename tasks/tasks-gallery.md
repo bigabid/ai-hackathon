@@ -1,0 +1,115 @@
+# Gallery Project Tasks
+
+## Detailed Tasks
+
+- [ ] 1.0 Project Setup
+  - [ ] 1.5 Add VS Code configuration (30m)
+    - Create .vscode directory
+    - Add launch.json for debugging configurations
+    - Add tasks.json for common development tasks
+  - [ ] 1.1 Initialize Next.js project with TypeScript (1h)
+    - Create Next.js app with TypeScript template
+    - Configure tsconfig.json
+    - Set up ESLint and Prettier
+  - [ ] 1.2 Add and configure Tailwind CSS (1h)
+    - Install Tailwind and dependencies
+    - Configure tailwind.config.js
+    - Set up basic global styles
+  - [ ] 1.3 Set up project structure (1h)
+    - Create core directories (components, pages, lib, types)
+    - Set up API route structure
+    - Add utility folders
+  - [ ] 1.4 Configure testing environment (1h)
+    - Install Vitest and testing-library
+    - Set up Playwright for E2E
+    - Create test helpers and fixtures
+
+- [ ] 2.0 Admin Authentication
+  - [ ] 2.1 Basic admin login UI (1h)
+    - Create login form component
+    - Add form validation
+    - Implement error handling
+  - [ ] 2.2 Authentication system setup (2h)
+    - Install and configure Next-Auth
+    - Set up credentials provider
+    - Create auth API endpoints
+  - [ ] 2.3 Protected routes implementation (1h)
+    - Create auth middleware
+    - Add protected API routes
+    - Implement client-side auth checks
+  - [ ] 2.4 Admin dashboard shell (1h)
+    - Create dashboard layout
+    - Add navigation components
+    - Implement logout functionality
+
+- [ ] 3.0 File Upload System
+  - [ ] 3.1 Upload UI components (2h)
+    - Create drag-and-drop zone
+    - Add file selection button
+    - Implement upload progress indicator
+  - [ ] 3.2 File validation (1h)
+    - Add file type checking
+    - Implement size validation
+    - Create error messaging
+  - [ ] 3.3 File storage system (2h)
+    - Set up local file storage
+    - Create file handling utilities
+    - Implement cleanup system
+  - [ ] 3.4 Image processing (2h)
+    - Add Sharp for image processing
+    - Create thumbnail generation
+    - Implement image optimization
+
+- [ ] 4.0 Gallery Management
+  - [ ] 4.1 Gallery creation (1h)
+    - Create new gallery form
+    - Add metadata handling
+    - Implement basic validation
+  - [ ] 4.2 Gallery organization (2h)
+    - Add gallery list view
+    - Create edit/delete functionality
+    - Implement drag-and-drop ordering
+  - [ ] 4.3 Share system (1h)
+    - Generate unique URLs
+    - Create copy-to-clipboard
+    - Add share status indicator
+  - [ ] 4.4 Admin preview (1h)
+    - Create gallery preview mode
+    - Add quick edit features
+    - Implement preview/publish toggle
+
+- [ ] 5.0 Public Gallery View
+  - [ ] 5.1 Gallery grid implementation (2h)
+    - Create responsive grid layout
+    - Add lazy loading
+    - Implement scroll handling
+  - [ ] 5.2 Media viewer (2h)
+    - Create lightbox component
+    - Add video player support
+    - Implement navigation controls
+  - [ ] 5.3 Mobile optimization (1h)
+    - Add touch gestures
+    - Optimize layout for small screens
+    - Implement mobile-first features
+  - [ ] 5.4 Loading states (1h)
+    - Add loading skeletons
+    - Implement progressive loading
+    - Create error states
+
+- [ ] 6.0 Testing and Polish
+  - [ ] 6.1 Unit testing (2h)
+    - Test authentication flow
+    - Test file handling
+    - Test gallery operations
+  - [ ] 6.2 E2E testing (2h)
+    - Test user journeys
+    - Test file uploads
+    - Test gallery sharing
+  - [ ] 6.3 Performance optimization (1h)
+    - Optimize image loading
+    - Improve initial load time
+    - Add caching strategies
+  - [ ] 6.4 Security hardening (1h)
+    - Add rate limiting
+    - Implement file scanning
+    - Security headers setup
