@@ -62,6 +62,7 @@ export default function CampaignsPage() {
               <div className="text-sm text-gray-600">Status: {c.status} · Link token: {c.shareToken}</div>
             </div>
             <div className="space-x-2">
+              <a href={`/admin/creatives?campaignId=${c.id}`} className="rounded bg-blue-600 px-3 py-1 text-white">Manage creatives</a>
               <button onClick={() => del(c.id)} className="rounded bg-red-100 px-3 py-1 text-red-700">Delete</button>
             </div>
           </li>
