@@ -1,0 +1,132 @@
+---
+description: Guidelines for using Browser MCP for visual testing and validation
+globs: ["**/*.{tsx,jsx,css}", "**/*.test.{ts,tsx}"]
+alwaysApply: false
+---
+
+# Browser MCP Testing Guidelines
+
+## When to Use Browser MCP
+
+### 1. Visual Validation
+- After making significant UI changes
+- When implementing new components
+- After updating styles or layouts
+- When fixing CSS issues
+- To verify responsive design
+
+### 2. Interactive Testing
+- Testing click handlers and events
+- Verifying hover states and animations
+- Checking form interactions
+- Testing navigation flows
+- Validating modal/dialog behavior
+
+### 3. Accessibility Testing
+- Verifying focus states
+- Testing keyboard navigation
+- Checking ARIA attributes
+- Validating color contrast
+- Testing screen reader compatibility
+
+## Testing Protocol
+
+1. **Initial Snapshot**
+   ```typescript
+   // Take initial snapshot of the page
+   mcp_browsermcp_browser_navigate({url: "http://localhost:3000"})
+   ```
+
+2. **Interaction Testing**
+   ```typescript
+   // Test click interactions
+   mcp_browsermcp_browser_click({element: "button", ref: "ref-id"})
+   
+   // Test hover states
+   mcp_browsermcp_browser_hover({element: "card", ref: "ref-id"})
+   ```
+
+3. **Navigation Testing**
+   ```typescript
+   // Test navigation between pages
+   mcp_browsermcp_browser_click({element: "link", ref: "ref-id"})
+   mcp_browsermcp_browser_go_back()
+   ```
+
+## Common Testing Scenarios
+
+### Layout Testing
+- Check page structure
+- Verify component alignment
+- Test responsive breakpoints
+- Validate spacing and margins
+
+### Style Testing
+- Verify CSS classes are applied
+- Check color schemes
+- Test typography
+- Validate animations
+
+### Interactive Element Testing
+- Button states (hover, focus, active)
+- Form input behavior
+- Modal/dialog interactions
+- Navigation transitions
+
+## Best Practices
+
+1. **Take Multiple Snapshots**
+   - Before changes
+   - After each significant change
+   - Final validation
+
+2. **Test Responsive Design**
+   - Desktop view
+   - Tablet view
+   - Mobile view
+
+3. **Verify Interactions**
+   - Click events
+   - Hover states
+   - Focus management
+   - Keyboard navigation
+
+4. **Document Issues**
+   - Screenshot problematic areas
+   - Note specific CSS classes not applying
+   - Document browser differences
+
+## Error Handling
+
+1. **CSS Issues**
+   - Check class names
+   - Verify Tailwind configuration
+   - Check file paths
+   - Validate imports
+
+2. **Layout Issues**
+   - Check responsive classes
+   - Verify container widths
+   - Test overflow handling
+
+3. **Interactive Issues**
+   - Verify event handlers
+   - Check state management
+   - Test error boundaries
+
+## When to Skip Browser MCP
+
+1. **Unit Testing**
+   - Use Vitest instead
+   - Component isolation tests
+   - Function testing
+
+2. **API Testing**
+   - Use API testing tools
+   - Backend validation
+   - Data flow testing
+
+3. **Build/Config Changes**
+   - No visual changes
+   - Infrastructure updates
+   - Dependency management
