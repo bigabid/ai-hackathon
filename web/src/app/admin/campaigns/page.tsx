@@ -45,6 +45,16 @@ export default function CampaignsPage() {
     await load();
   }
 
+  async function publish(id: string) {
+    await fetch(`/api/admin/campaigns`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, status: 'PUBLISHED' }) });
+    await load();
+  }
+
+  async function unpublish(id: string) {
+    await fetch(`/api/admin/campaigns`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, status: 'DRAFT' }) });
+    await load();
+  }
+
   return (
     <main className="p-6 space-y-6">
       <h1 className="text-2xl font-bold">Campaigns</h1>
@@ -63,6 +73,12 @@ export default function CampaignsPage() {
             </div>
             <div className="space-x-2">
               <a href={`/admin/creatives?campaignId=${c.id}`} className="rounded bg-blue-600 px-3 py-1 text-white">Manage creatives</a>
+              <a href={`/c/${c.shareToken}`} className="rounded bg-gray-800 px-3 py-1 text-white" target="_blank">Preview</a>
+              {c.status !== 'PUBLISHED' ? (
+                <button onClick={() => publish(c.id)} className="rounded bg-green-600 px-3 py-1 text-white">Publish</button>
+              ) : (
+                <button onClick={() => unpublish(c.id)} className="rounded bg-yellow-500 px-3 py-1 text-white">Unpublish</button>
+              )}
               <button onClick={() => del(c.id)} className="rounded bg-red-100 px-3 py-1 text-red-700">Delete</button>
             </div>
           </li>
