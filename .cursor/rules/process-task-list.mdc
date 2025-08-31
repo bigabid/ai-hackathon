@@ -7,6 +7,11 @@ alwaysApply: false
 
 Guidelines for executing and maintaining task lists derived from a PRD.
 
+#### Attachment/Trigger Summary
+- Auto-attach when editing or referencing `tasks/**/*.md` files (PRDs and task lists).
+- Manually include `@process-task-list` during implementation to enforce one-task-at-a-time protocol.
+- Works alongside `@project-planning`, `@memory`, and `@mcp-browser-testing`.
+
 ## Principles (Cursor Best Practices)
 
 - One sub‑task at a time: complete, validate, then proceed.

@@ -1,6 +1,6 @@
 ---
 description: Complete project planning workflow from PRD creation to task execution with POC-first development methodology
-globs: ["tasks/**/*.mdc", "*.mdc"]
+globs: ["tasks/**/*.md", "tasks/**/*.mdc", "*.mdc"]
 alwaysApply: false
 ---
 
@@ -21,13 +21,27 @@ This rule provides the comprehensive workflow for planning and executing project
 
 Do not skip steps. Require explicit user confirmation (reply "Go") before proceeding to the next step.
 
+#### Attachment/Trigger Summary
+- Auto-attach when editing or referencing files under `tasks/**` (PRDs and task lists).
+- Manually mention `@project-planning` to force-include during planning conversations.
+- Works in conjunction with `@process-task-list`, `@memory`, and `@mcp-browser-testing`.
+
 ### Step 1: Create PRD (Product Requirements Document)
 **CRITICAL**: When user references project planning:
 1. **NEVER write a PRD immediately** - start with clarifying questions
 2. **Sequential questioning** - ask one question, wait for answer
-3. **Multple answer questions** - choose a,b,c,d ... or choose for me
+3. **Multiple-choice questions** - present options a,b,c,d... or "choose for me". If you choose for the user, state your selection and a brief rationale; the user can accept or change it.
 4. **Max 10 questions** for MVP scope, after 10 questions, ask the user if he wants to continue with the next 10 questions or let AI answer for him.
 5. **Save as** `tasks/prd-[feature-name].md`
+
+**Outputs**
+- File created: `tasks/prd-[feature-name].md`
+- State checkpoint: Pause and wait for "Go" before proceeding to Step 2.
+
+#### Enforcement and Auto-Actions
+- Auto-create `tasks/prd-[feature-name].md` immediately after completing discovery + tech questions (or when the user says "choose for me").
+- Before asking to proceed to Step 2, verify the file exists; if missing, create it and announce the path.
+- Do not proceed to Step 2 unless the file exists. If file write fails, stop and ask for an alternative path or permission to create the `tasks/` directory.
 
 **Example Questions Flow**:
 ```
@@ -84,6 +98,17 @@ Pause/Confirm
 3. Break into **sub-tasks** (≤1-2 hours each)
 4. Save as `tasks/tasks-[feature-name].md`
 
+**Outputs**
+- File created: `tasks/tasks-[feature-name].md`
+- State checkpoint: Pause and wait for "Go" before proceeding to Step 3.
+
+#### Enforcement and Auto-Actions
+- Immediately write the parent tasks to `tasks/tasks-[feature-name].md` once generated.
+- Include a "Subtasks" scaffold section under each parent (placeholder) to ensure structure exists.
+- Upon user reply "Go" (breakdown), auto-write 1–2 hour subtasks beneath each parent in the same file without additional prompts.
+- Do not proceed to Step 3 until the tasks file exists and contains at least one subtask under `1.0`.
+- If the file or sections are missing, self-heal by creating/updating the file and report what was added.
+
 **Task Structure**:
 ```markdown
 - [ ] 1.0 Core Functionality (POC Phase)
@@ -120,6 +145,15 @@ After the tech stack is chosen, import relevant curated rules from `@rules-direc
 5. Keep rules focused
    - Keep under 500 lines; split into multiple composable rules if needed. Provide concrete examples and referenced files.
 
+**Outputs**
+- Curated rules copied into `.cursor/rules/` and tailored with accurate `description`, `globs`, and `alwaysApply`.
+- State checkpoint: Pause and wait for "Go" before starting Phase 1 (POC Development).
+
+#### Enforcement and Auto-Actions
+- Auto-locate relevant rules in `rules-directory/` and copy into `.cursor/rules/` with tailored headers for this project.
+- Refuse to begin Phase 1 unless at least React, TypeScript, Tailwind, and testing rules are present and scoped via `globs`.
+- For multi-package repos, also place nested rules under affected subfolders (e.g., `frontend/.cursor/rules/`).
+
 Nested rules (auto attach by directory)
 Organize rules by placing `.cursor/rules` in relevant folders. Rules inside these folders auto-attach when files in that directory are referenced.
 
@@ -153,6 +187,11 @@ Why
 
 Pause/Confirm
 - Ask: "Proceed to Phase 1 (POC Development)? Reply 'Go' to start or 'Adjust rules' to refine."
+
+### Pre‑Flight Checklist (must be true before Phase 1)
+- [ ] `tasks/prd-[feature-name].md` exists and summarizes decisions
+- [ ] `tasks/tasks-[feature-name].md` exists with parent tasks and subtasks
+- [ ] `.cursor/rules/` contains tailored React, TypeScript, Tailwind, and testing rules
 
 ## 🚀 **Phase 1: POC Development**
 
@@ -305,6 +344,55 @@ export const environments = {
 };
 ```
 
+## 🧱 **Infrastructure Preferences**
+
+### POC/Demo (Default)
+- Run the web app locally with pnpm (do not dockerize the main app).
+  ```bash
+  pnpm install
+  pnpm dev
+  ```
+- Use Docker Compose only for infrastructure dependencies (e.g., database, Mailpit).
+  ```bash
+  docker compose up -d
+  docker compose logs -f | cat
+  docker compose down -v
+  ```
+- Suggested files at project root:
+  - `docker-compose.yml` orchestrating infra services only (no `web` service)
+
+Minimal compose example (adapt as needed):
+
+```yaml
+# docker-compose.yml
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=app
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "8026:8025"
+      - "8025:8025"
+volumes:
+  db_data:
+```
+
+### Production (When graduating from Demo)
+- Prefer managed cloud infrastructure. Typical paths:
+  - Frontend: Vercel/Netlify (Next.js/SPA) or container on AWS/GCP/Azure
+  - APIs/Workers: Containers on AWS ECS/EKS, GCP Cloud Run/GKE, or Azure
+  - Data: Managed Postgres/MySQL/NoSQL; managed object/blob storage
+- Establish CI/CD to build images, push to a registry, and deploy per environment.
+- Harden with observability, security scanning, and secret management.
+
 ### Error Handling Standards
 ```javascript
 // Good: Typed errors (never return null silently)
@@ -372,3 +460,9 @@ When starting a new project, the agent should:
 5. **Maintain rule quality** by consolidating and refining based on usage
 
 **Next Steps**: Start with sequential questioning to create your PRD!
+
+## 🔗 Related Rules
+
+- `@process-task-list` — execution protocol for task lists derived from the PRD
+- `@memory` — capture project decisions and preferences as they are learned
+- `@mcp-browser-testing` — manual E2E validation before advancing milestones

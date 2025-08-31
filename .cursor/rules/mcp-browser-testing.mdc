@@ -1,59 +1,14 @@
 ---
 description: Provide a reproducible manual end-to-end (E2E) test flow using Browser MCP to validate the UI and critical user journeys before moving to the next task/milestone.
+globs: ["**/*.md", "**/*.mdc"]
 alwaysApply: false
 ---
 # Rule: Browser MCP Manual E2E Testing
 
-## Goal
-
-Provide a reproducible manual end-to-end (E2E) test flow using Browser MCP to validate the UI and critical user journeys before moving to the next task/milestone.
-
-## Prerequisites
-
-- Browser MCP extension installed and connected to Cursor.
-- Local stack running via Docker Compose (web on port 3001, Mailpit on 8026).
-- Test email you can use for magic-link (dev) login.
-
-## Sources
-
-- Browser MCP documentation: `https://browsermcp.io/`
-
-## Manual E2E Flow (MVP)
-
-1. Admin login
-   - Navigate to `http://localhost:3001/login`.
-   - Enter test email and request magic link.
-   - If direct-login is enabled, proceed to `/admin`. Otherwise, open `http://localhost:8026`, open the mail, click the login link.
-2. Create campaign
-   - Go to `/admin/campaigns`, create a campaign (name + optional description).
-3. Upload creatives
-   - Click “Manage creatives”, upload at least one valid asset per specs (image/video/HTML5), adjust weights.
-4. Publish & preview
-   - Publish the campaign. Click Preview to open `/c/[token]` and verify creatives display.
-5. Swipe UI
-   - Open `/s/[token]`, perform Like, Dislike, Superlike, Skip, and Undo. Confirm impressions recorded.
-6. Results
-   - Open `/admin/results?campaignId=[id]` and verify metrics update; export CSV.
-
-## Expected Outcomes
-
-- Admin routes guarded; login completes.
-- Uploads enforce basic validation; invalid assets rejected with clear error.
-- Publish toggles status; preview shows creatives.
-- Swipe actions record events; Undo reverts last action behavior.
-- Results page lists per-variant metrics; CSV downloads successfully.
-
-## Variations / Edge Cases
-
-- Empty campaign (no creatives) → preview should handle gracefully.
-- Large/invalid files → upload rejected with error.
-- Multiple swipes in sequence → no crashes; events recorded.
-
-## Notes
-
-- Prefer running this flow at each major milestone.
-- Capture a short screen recording or screenshots if feasible for review.
-# Rule: Browser MCP Manual E2E Testing
+#### Attachment/Trigger Summary
+- Auto-attach when editing test plans or documentation (`**/*.md`, `**/*.mdc`).
+- Manually include `@mcp-browser-testing` when preparing to run manual E2E validation before a milestone.
+- Complements `@project-planning` (phase gates) and `@process-task-list` (checkpoints).
 
 ## Goal
 
@@ -104,3 +59,4 @@ Provide a reproducible manual end-to-end (E2E) test flow using Browser MCP to va
 
 - Prefer running this flow at each major milestone.
 - Capture a short screen recording or screenshots if feasible for review.
+
