@@ -92,8 +92,19 @@ Pause/Confirm
 - Ask: "Proceed to Step 2: Generate Task List? Reply 'Go' to continue or 'Adjust PRD' to iterate."
 
 ### Step 2: Generate Task List
+
+Make `1.0 Project setup` the first parent task. Keep PRD content separate in Step 1.
+
+1.0 Project setup — scope (no duplication):
+- Repo and tooling bootstrap (package manager init, linting/formatting, `.gitignore`).
+- Import and tailor curated rules per Step 3 (do not restate details here).
+- Baseline README and scripts; use commands listed under "Development Commands".
+- Create minimal directory scaffolding per "File Structure" in Phase 1.
+- Ensure `tasks/prd-[feature-name].md` and `tasks/tasks-[feature-name].md` exist with scaffolds.
+- Optional: CI skeleton and deployment preview links (reference your team standards).
+
 **Process**:
-1. Generate 5-10 **parent tasks** covering full implementation
+1. Generate 5-10 **parent tasks** covering full implementation (starting with `1.0 Project setup`)
 2. **PAUSE** and wait for "Go" confirmation
 3. Break into **sub-tasks** (≤1-2 hours each)
 4. Save as `tasks/tasks-[feature-name].md`
@@ -111,16 +122,20 @@ Pause/Confirm
 
 **Task Structure**:
 ```markdown
-- [ ] 1.0 Core Functionality (POC Phase)
-  - [ ] 1.1 Basic HTML structure
-  - [ ] 1.2 Core interaction working
-  - [ ] 1.3 Visual feedback
-- [ ] 2.0 Enhanced Demo (Demo Phase)
-  - [ ] 2.1 Realistic sample data
-  - [ ] 2.2 Smooth animations
-- [ ] 3.0 Production Ready (Production Phase)
-  - [ ] 3.1 Error handling
-  - [ ] 3.2 Performance optimization
+- [ ] 1.0 Project setup
+  - [ ] 1.1 Repo/tooling initialized (pnpm, linting, formatting)
+  - [ ] 1.2 Curated rules imported and tailored in `.cursor/rules`
+  - [ ] 1.3 PRD and tasks scaffolds verified under `tasks/`
+- [ ] 2.0 Core Functionality (POC Phase)
+  - [ ] 2.1 Basic HTML structure
+  - [ ] 2.2 Core interaction working
+  - [ ] 2.3 Visual feedback
+- [ ] 3.0 Enhanced Demo (Demo Phase)
+  - [ ] 3.1 Realistic sample data
+  - [ ] 3.2 Smooth animations
+- [ ] 4.0 Production Ready (Production Phase)
+  - [ ] 4.1 Error handling
+  - [ ] 4.2 Performance optimization
 ```
 
 Pause/Confirm
@@ -191,6 +206,7 @@ Pause/Confirm
 ### Pre‑Flight Checklist (must be true before Phase 1)
 - [ ] `tasks/prd-[feature-name].md` exists and summarizes decisions
 - [ ] `tasks/tasks-[feature-name].md` exists with parent tasks and subtasks
+- [ ] `tasks/tasks-[feature-name].md` includes `1.0 Project setup` as the first parent
 - [ ] `.cursor/rules/` contains tailored React, TypeScript, Tailwind, and testing rules
 
 ## 🚀 **Phase 1: POC Development**
