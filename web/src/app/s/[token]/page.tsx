@@ -19,6 +19,15 @@ export default function SwipePage({ params }: { params: { token: string } }) {
 
   useEffect(() => { loadNext(); }, [token]);
 
+  // Record impression when a new creative is shown
+  useEffect(() => {
+    if (!creative) return;
+    fetch(`/api/s/${token}/event`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ creativeId: creative.id, sessionId, type: 'IMPRESSION' }),
+    });
+  }, [creative?.id]);
+
   async function send(type: 'LIKE' | 'DISLIKE' | 'SUPERLIKE' | 'SKIP') {
     if (!creative) return;
     await fetch(`/api/s/${token}/event`, {

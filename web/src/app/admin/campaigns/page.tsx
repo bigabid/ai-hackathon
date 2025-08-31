@@ -79,6 +79,7 @@ export default function CampaignsPage() {
               ) : (
                 <button onClick={() => unpublish(c.id)} className="rounded bg-yellow-500 px-3 py-1 text-white">Unpublish</button>
               )}
+              <a href={`/admin/results?campaignId=${c.id}`} className="rounded bg-purple-700 px-3 py-1 text-white">Results</a>
               <button onClick={() => del(c.id)} className="rounded bg-red-100 px-3 py-1 text-red-700">Delete</button>
             </div>
           </li>
