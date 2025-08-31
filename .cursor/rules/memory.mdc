@@ -1,12 +1,13 @@
 ---
+description: Project memory and development handbook with user preferences and technical decisions
 alwaysApply: true
 ---
 
 # Project Memory & Dev Handbook
 
 This file is the **source of truth** for project knowledge, conventions, and decisions used by the AI (Cursor rules).
-
-> Storybook docs are **generated/mirrored** from this file into `storybook/learned-memories/*.mdx` using the provided sync script.
+> create a sync script to convert memories into stoybook format.
+> Storybook docs are **generated/mirrored** from this file into `storybook/learned-memories/*.mdx` using sync script.
 
 ## How This Works
 - **Authoritative memory for AI**: `.cursor/rules/learned-memories.mdc`

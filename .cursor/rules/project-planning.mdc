@@ -1,0 +1,295 @@
+---
+description: Complete project planning workflow from PRD creation to task execution with POC-first development methodology
+globs: ["tasks/**/*.md", "*.md"]
+alwaysApply: false
+---
+
+# Complete Project Planning Workflow
+
+This rule provides the comprehensive workflow for planning and executing projects using POC-first development methodology.
+
+## 🎯 **Overview: The Three-Phase Journey**
+
+```
+📋 Planning → 🚀 POC → 🎨 Demo → 🏭 Production
+   (Hours)    (Hours)   (1-2 Days)  (Ongoing)
+```
+
+**Core Philosophy**: Get something visual and interactive ASAP, then progressively enhance.
+
+## 📋 **Phase 0: Project Planning**
+
+### Step 1: Create PRD (Product Requirements Document)
+**CRITICAL**: When user references project planning:
+1. **NEVER write a PRD immediately** - start with clarifying questions
+2. **Sequential questioning** - ask one question, wait for answer
+3. **Max 20 questions** for MVP scope
+4. **Save as** `tasks/prd-[feature-name].md`
+
+**Example Questions Flow**:
+```
+Q1: What problem are we solving?
+Q2: Who is the primary user?
+Q3: What's the core user flow?
+Q4: What defines success?
+...
+Q20: Any technical constraints?
+```
+
+### Step 2: Generate Task List
+**Process**:
+1. Generate 5-10 **parent tasks** covering full implementation
+2. **PAUSE** and wait for "Go" confirmation
+3. Break into **sub-tasks** (≤1-2 hours each)
+4. Save as `tasks/tasks-[feature-name].md`
+
+**Task Structure**:
+```markdown
+- [ ] 1.0 Core Functionality (POC Phase)
+  - [ ] 1.1 Basic HTML structure
+  - [ ] 1.2 Core interaction working
+  - [ ] 1.3 Visual feedback
+- [ ] 2.0 Enhanced Demo (Demo Phase)
+  - [ ] 2.1 Realistic sample data
+  - [ ] 2.2 Smooth animations
+- [ ] 3.0 Production Ready (Production Phase)
+  - [ ] 3.1 Error handling
+  - [ ] 3.2 Performance optimization
+```
+
+### Step 3: Self-Add Specialized Rules
+**Agent should automatically add relevant rules based on project type**:
+
+```javascript
+// Agent decision logic for rule addition
+// Add domain-specific rules as appropriate for the project.
+// Example: web apps, services, data pipelines, etc.
+
+if (projectType.includes('react') || projectType.includes('web-app')) {
+  addRule('@code-developer.mdc');
+}
+
+if (hasTestingRequirements) {
+  addRule('@testing-patterns.mdc');
+}
+
+// Always add for any code project
+addRule('@memory.mdc'); // User preferences and conventions
+```
+
+**MCP Rules Integration**:
+- **If code generation expected**, add note to include curated MCP rule files from awesome-cursorrules, cursor.directory
+- **Add specialized rules** for domain-specific patterns (e.g., performance, realtime systems, data pipelines)
+
+## 🚀 **Phase 1: POC Development**
+
+### Technology Stack (from @memory.mdc)
+**Default Stack**:
+```bash
+# Initialize with preferred stack
+pnpm init
+pnpm add next react react-dom tailwindcss recharts zod
+pnpm add -D vitest playwright @vitest/ui msw @testing-library/dom
+```
+
+### POC Implementation Priorities
+1. ✅ **Visual First** - Something users can see immediately
+2. ✅ **Core Functionality** - Main user flow works
+3. ✅ **Hardcoded Data** - Skip API complexity
+4. ❌ Skip error handling, edge cases, optimization
+
+**File Structure**:
+```
+src/
+├── poc/                    # Phase 1: Quick prototypes
+├── demo/                   # Phase 2: Polished demos  
+├── core/                   # Phase 3: Production code
+└── tests/                  # Test files
+```
+
+### POC Success Criteria
+- [ ] Users can see and interact with the core feature
+- [ ] Main user flow works (even if basic)
+- [ ] Visual feedback is present
+- [ ] Demo is shareable via URL
+- [ ] Completed within hours, not days
+
+## 🎨 **Phase 2: Demo Enhancement**
+
+### Demo Priorities
+1. ✅ **Realistic Data** - Sample data representing real use cases
+2. ✅ **Smooth Interactions** - Animations and transitions
+3. ✅ **Basic Error Handling** - Common failure cases
+4. ✅ **Cross-Device Testing** - Mobile and desktop
+5. ✅ **Visual Polish** - Improved design
+
+### Demo Success Criteria
+- [ ] Realistic data and interactions
+- [ ] Smooth animations (targeting 60fps)
+- [ ] Works on mobile and desktop
+- [ ] Basic error states handled
+- [ ] Visually polished
+- [ ] Basic test coverage
+
+## 🏭 **Phase 3: Production Ready**
+
+### Production Priorities
+1. ✅ **Error Handling** - Comprehensive error handling and recovery
+2. ✅ **Performance** - 60fps animations, memory management
+3. ✅ **Accessibility** - WCAG compliance, keyboard navigation
+4. ✅ **Security** - Input validation, XSS prevention
+5. ✅ **Monitoring** - Analytics, error reporting
+6. ✅ **Testing** - Unit, integration, cross-browser tests
+
+### Production Success Criteria
+- [ ] 80% test coverage achieved
+- [ ] Performance benchmarks met (60fps)
+- [ ] Accessibility compliance (WCAG AA)
+- [ ] Security validation passed
+- [ ] Error rate <1%
+- [ ] Production monitoring active
+
+## 🔄 **Task Execution Protocol**
+
+### During Development
+1. **Pick next sub-task** from task list
+2. **Implement** code, tests, docs for this sub-task only
+3. **Validate locally** - run relevant tests
+4. **Update task list** - mark `[x]` completed
+5. **Collaboration Protocol**:
+   - **Ask one question at a time** during reviews
+   - **Wait for acknowledgement** before proceeding
+   - **Pause for approval** when collaborating
+
+### Git Workflow
+```bash
+# Create feature branch per parent task
+git checkout -b feat/feature-name
+
+# Commit with conventional commits + PRD references
+git commit -m "feat: implement POC (FR-2)" \
+           -m "- Adds basic functionality" \
+           -m "Related to Task 1.0 in PRD"
+
+# Rebase before PR (avoid merge commits)
+git rebase main
+```
+
+## 🛠️ **Development Commands**
+
+### Project Setup
+```bash
+# Initialize project structure
+mkdir -p src/{poc,demo,core,components,utils} tests/{unit,integration,e2e} storybook/learned-memories
+
+# Setup Storybook documentation mirroring
+node scripts/sync-mdc-to-mdx.js .cursor/rules/learned-memories.mdc storybook/learned-memories
+
+# Start development server
+pnpm dev  # or python3 -m http.server 8080 for static demos
+```
+
+### Testing Commands
+```bash
+# Run tests (following @testing-patterns.mdc)
+pnpm test                    # vitest
+pnpm test:watch             # vitest --watch  
+pnpm test:coverage          # vitest --coverage
+pnpm test:performance       # vitest --testNamePattern='performance'
+pnpm test:a11y              # vitest --testNamePattern='accessibility'
+```
+
+## 🌍 **Environment Management**
+
+### Environment Configuration
+```javascript
+// config/environments.js
+export const environments = {
+  development: {
+    apiEndpoint: 'http://localhost:3000/api',
+    enableDebugLogs: true,
+    mockData: true,
+    performanceMonitoring: false
+  },
+  demo: {
+    apiEndpoint: 'https://demo-api.example.com',
+    enableDebugLogs: true,
+    mockData: false,
+    performanceMonitoring: true
+  },
+  production: {
+    apiEndpoint: 'https://api.example.com',
+    enableDebugLogs: false,
+    mockData: false,
+    performanceMonitoring: true
+  }
+};
+```
+
+### Error Handling Standards
+```javascript
+// Good: Typed errors (never return null silently)
+class ValidationError extends Error {
+  constructor(message, field) {
+    super(message);
+    this.name = 'ValidationError';
+    this.field = field;
+  }
+}
+
+// Use Result type pattern with Zod schemas
+function validateUser(data) {
+  const result = UserSchema.safeParse(data);
+  if (!result.success) {
+    throw new ValidationError('Invalid user data', result.error);
+  }
+  return result.data;
+}
+```
+
+## 🎯 **Success Metrics**
+
+### Development Velocity
+- **POC**: Working demo within 4-8 hours
+- **Demo**: Polished version within 1-2 days
+- **Production**: Incremental enhancement over weeks
+
+### Quality Metrics
+- **Performance**: >55fps on mid-range devices
+- **Accessibility**: WCAG AA compliance
+- **Testing**: >80% code coverage
+- **Error Rate**: <1% in production
+- **User Engagement**: Measurable improvement over baseline
+
+## 🚀 **Key Principles**
+
+1. **Start Visual** - Always create something users can see first
+2. **Iterate Rapidly** - POC → Demo → Production progression
+3. **User Feedback Early** - Deploy demos immediately
+4. **Progressive Enhancement** - Add complexity only when core works
+5. **Production Last** - Don't over-engineer until concept is validated
+
+**Remember**: *A working demo is worth a thousand specifications!*
+
+## 📚 **Quick Reference**
+
+| Phase | Duration | Focus | Success Criteria |
+|-------|----------|-------|------------------|
+| **POC** | Hours | Visual + Core Function | Users can interact |
+| **Demo** | 1-2 Days | Polish + Realistic Data | Cross-device works |
+| **Production** | Ongoing | Robust + Scalable | Production ready |
+
+## 🤖 **Agent Self-Enhancement Protocol**
+
+When starting a new project, the agent should:
+
+1. **Analyze project requirements** from user input
+2. **Automatically add relevant specialized rules**:
+   - `@code-developer.mdc` for web applications
+   - `@testing-patterns.mdc` for projects requiring testing
+   - Domain-specific rules as needed (e.g., performance, realtime, data)
+3. **Follow the complete workflow** from PRD → POC → Demo → Production
+4. **Update rules** based on project learnings and patterns
+5. **Maintain rule quality** by consolidating and refining based on usage
+
+**Next Steps**: Start with sequential questioning to create your PRD!

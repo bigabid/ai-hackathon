@@ -1,5 +1,6 @@
 ---
-description: Guidelines for executing and maintaining task lists derived from a PRD.
+description: Guidelines for executing and maintaining task lists derived from a PRD with one-task-at-a-time approach
+globs: ["tasks/**/*.md"]
 alwaysApply: false
 ---
 # Task List Management
