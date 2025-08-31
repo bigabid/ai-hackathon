@@ -72,5 +72,6 @@
 - [ ] 11. MCP rules and docs
   - [ ] Add curated Next.js/TS/lint/testing rules from high-score sources
   - [ ] Document how the agent should use rules and scripts
+  - [ ] Run Browser MCP manual E2E smoke (login → create → upload → publish → preview → swipe → results)
 
 

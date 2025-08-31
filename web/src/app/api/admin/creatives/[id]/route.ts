@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { removeAsset } from '@/src/lib/fs';
+import { removeAsset } from '@/lib/fs';
 
 const prisma = new PrismaClient();
 

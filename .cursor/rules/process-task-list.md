@@ -1,0 +1,79 @@
+# Task List Management
+
+Guidelines for executing and maintaining task lists derived from a PRD.
+
+## Principles (Cursor Best Practices)
+
+- One sub‑task at a time: complete, validate, then proceed.
+- Keep the list as the source of truth: always update after changes.
+- Test early and often: add/adjust tests per sub‑task.
+- Commit with context: conventional commits + concise bullet reasons.
+
+### Why
+- Reduces context loss and merge friction.
+- Enables accurate progress tracking and safer iteration.
+
+## Task Implementation Protocol
+
+1. Pick the next sub‑task
+   - Ensure it has clear acceptance criteria and references PRD IDs (e.g., FR‑3).
+2. Implement
+   - Write code, tests, and docs for this sub‑task only.
+3. Validate locally
+   - Run the relevant tests (unit + integration as applicable).
+4. Update the task list
+   - Mark the sub‑task `[x]` and add any newly discovered follow‑ups.
+5. Pause for approval when required
+   - If collaborating, wait for “yes/y” before starting the next sub‑task.
+
+### Why
+- Enforces discipline and keeps reviewers synchronized with the actual state.
+
+## Parent Task Completion Protocol
+
+When all subtasks under a parent task are `[x]`:
+
+1. Run full test suite
+   - Use your project’s canonical command (e.g., `npm test`, `pytest`).
+2. Stage changes
+   - `git add .`
+3. Clean up
+   - Remove temp files and unused code.
+4. Commit using a single‑line command with `-m` flags
+   - Example:
+     ```
+     git commit -m "feat: implement FR‑3 account linking" -m "- Adds REST handler, service, tests" -m "- Handles edge cases for OAuth timeouts" -m "Related to 2.0 in tasks and PRD"
+     ```
+5. Mark the parent task `[x]`
+
+### Why
+- Ensures stable checkpoints and readable history tied to plan artifacts.
+
+## Task List Maintenance
+
+- Update as you work
+  - Mark done items, add follow‑ups, and adjust scope if needed.
+- Maintain the Relevant Files section
+  - For every file created/modified, add a one‑line purpose note and test pairing.
+- Keep traceability
+  - Reference PRD IDs (FR‑x) and link to commits or PRs when available.
+
+### Why
+- Maintains a live map of implementation that others can follow.
+
+## Before Starting Work
+
+- Confirm which sub‑task is next.
+- Check prerequisites or dependencies from earlier tasks.
+- Ensure acceptance criteria are testable and unambiguous.
+
+## After Implementing a Sub‑Task
+
+- Update the task list and pause if required by the collaboration model.
+- If the work uncovered gaps, add them as new items under the appropriate parent.
+
+## Notes
+
+- Prefer colocated tests (e.g., `Component.tsx` with `Component.test.tsx`).
+- Use consistent test commands and avoid interactive prompts in scripts.
+- Keep commits small and scoped to the sub‑task.
