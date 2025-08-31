@@ -9,6 +9,8 @@ Create a clear, actionable PRD in Markdown that a junior developer can implement
 - Ask before you write: collect missing details via concise, numbered questions.
 - Sequential questioning: ask one question at a time and wait for the user's answer before proceeding to the next.
 - MVP-first discovery: target at most 20 questions to reach an MVP-quality PRD; if information is still missing at 20, ask the user to either continue or allow autofill with sensible defaults.
+- Docker-first MVP: prefer an all-in-one Docker + Docker Compose setup for demo/PoC; also note a path to production hardening.
+- Prefer popular/high-score community resources when adding rules or integrations.
 - Keep output skimmable: consistent headings, bullets, and numbered requirements.
 - Single source of truth: save in `/tasks/` with stable, discoverable filenames.
 - Write for implementation: clarify scope, success, and acceptance up front.
@@ -30,6 +32,9 @@ Create a clear, actionable PRD in Markdown that a junior developer can implement
    - Include a dedicated Technical Considerations question near the end (stack, languages, frameworks, hosting, CI/CD, code style, linter/formatter, testing).
 3. Draft the PRD (see structure below)
    - Keep functional requirements numbered and testable.
+   - Reflect Docker-first MVP deployment (single docker-compose) and note a production path at a high level.
+   - If services are required (DB, storage, server), specify Docker/Compose setup in Technical Considerations.
+   - If code generation is expected, include a note to add curated MCP rule files based on popular/high-score sources (e.g., awesome-cursorrules, cursor.directory).
 4. Confirm unknowns
    - Add any remaining questions under “Open Questions”.
 5. Save
@@ -53,7 +58,7 @@ Create a clear, actionable PRD in Markdown that a junior developer can implement
 - Data: What data is displayed, captured, or mutated? Any sources?
 - Design/UI: Any mocks, components, or style guidelines to follow?
 - Edge Cases: What unusual scenarios or error states matter?
-- Technical Considerations: Preferred stack (frontend/backend/DB), programming language(s), frameworks, hosting, CI/CD, code style, linter/formatter, and testing strategy.
+- Technical Considerations: Preferred stack (frontend/backend/DB), programming language(s), frameworks, hosting, CI/CD, code style, linter/formatter, and testing strategy. Note Docker/Compose if services are required and whether MCP rules should be added.
 
 ### Why
 - Ensures completeness without dictating implementation details.
