@@ -1,6 +1,6 @@
 ---
 description: Guidelines for using Browser MCP for visual testing and validation
-globs: ["**/*.{tsx,jsx,css}", "**/*.test.{ts,tsx}"]
+globs: **/*.tsx, **/*.tsx, **/*.jsx, **/*.css, 
 alwaysApply: false
 ---
 

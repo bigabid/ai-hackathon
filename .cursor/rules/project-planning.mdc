@@ -1,6 +1,6 @@
 ---
 description: Complete project planning workflow from PRD creation to task execution with POC-first development methodology
-globs: ["tasks/**/*.md", "tasks/**/*.mdc", "*.mdc"]
+globs: tasks/**/*.md, tasks/**/*.mdc,*.mdc
 alwaysApply: false
 ---
 
