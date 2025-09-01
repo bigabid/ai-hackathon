@@ -2,21 +2,6 @@
 description: This rule explains how to create new .mdc project rule files for the Cursor agent.
 alwaysApply: false
 ---
-# Creating Cursor Rules (.mdc files)
-
-This guide explains how to create effective .mdc project rule files for the Cursor agent.
-
-## Rule File Structure
-
-Every .mdc rule file must start with YAML frontmatter followed by markdown content:
-
-```mdc
----
-description: Clear, concise description of when this rule applies
-globs: "**/*.ts", "**/*.tsx", "src/**/*.js"
-alwaysApply: false
----
-
 # Rule Title
 
 Main content explaining the rule with markdown formatting.
@@ -37,35 +22,8 @@ function badExample() {
   // Implementation not following guidelines
 }
 ```
-```
 
-## YAML Frontmatter Rules
-
-### Required Fields
-- **`description`**: Clear explanation of when/why this rule applies
-- **`globs`**: **COMMA-DELIMITED STRING** (not array) of file patterns
-- **`alwaysApply`**: Boolean - typically `false` for auto-attached rules
-
-### Globs Syntax (CRITICAL)
-```yaml
-# ✅ CORRECT - Comma-delimited string
-globs: "**/*.ts", "**/*.tsx", "src/**/*.js"
-
-# ❌ WRONG - Arrays are not supported
-globs: ["**/*.ts", "**/*.tsx", "src/**/*.js"]
-
-# ✅ CORRECT - Single pattern
-globs: "**/*.tsx"
-```
-
-## Rule Types & Behavior
-
-1. **Always Applied** (`alwaysApply: true`) - Always in context
-2. **Auto Attached** (`alwaysApply: false` + `globs`) - Attached when matching files referenced
-3. **Agent Requested** (`alwaysApply: false`, no `globs`) - AI decides when to include
-4. **Manual** - Only when explicitly mentioned (e.g., `@ruleName`)
-
-## Nested Rules
+## Nested rules
 
 Organize rules by placing `.cursor/rules` directories throughout your project. Nested rules automatically attach when files inside their directory are referenced.
 
@@ -81,51 +39,26 @@ project/
 ```
 
 How to create a nested rule:
-1. Create a `.cursor/rules/` directory inside the target subdirectory
-2. Add `.mdc` files with proper YAML frontmatter
-3. Use comma-delimited globs: `globs: "backend/server/**/*.ts", "**/*.service.ts"`
-4. Keep rules focused and composable
-5. Test by referencing files in the subdirectory
+1. Create a `.cursor/rules/` directory inside the target subdirectory (e.g., `backend/server/.cursor/rules`).
+2. Add one or more `.mdc` files with clear descriptions and the appropriate rule type.
+3. Prefer `Auto Attached` or `Agent Requested` types for scoped behavior; avoid `Always` unless truly global.
+4. Optionally set `globs` to further narrow applicability within that subtree.
+5. Keep rules focused and composable; split large guidance into smaller rules.
 
 Minimal template for a nested rule:
 ```mdc
 ---
 description: Backend service standards
-globs: "backend/server/**/*.ts", "**/*.service.ts"
+globs:
+  - "backend/server/**"
 alwaysApply: false
 ---
 
 - Use our internal RPC pattern for services
 - Validate all inputs with zod
-- Implement proper error handling
-```
-
-## Best Practices
-
-1. **Globs are comma-delimited strings** - never use arrays
-2. Keep `description` clear and specific about when rule applies
-3. Use `alwaysApply: false` for most rules (rely on globs or manual inclusion)
-4. Test rule activation by referencing matching files
-5. Split large rules into focused, composable smaller rules
-6. Document with concrete examples and anti-patterns
-
-## Common Glob Patterns
-
-```yaml
-# TypeScript files
-globs: "**/*.ts", "**/*.tsx"
-
-# Specific directories
-globs: "src/**/*.tsx", "components/**/*.ts"
-
-# Configuration files
-globs: "*.config.js", "*.config.ts", "package.json"
-
-# Test files
-globs: "**/*.test.ts", "**/*.spec.tsx", "**/__tests__/**"
 ```
 
 Notes:
-- When multiple nested rules apply, Cursor combines them in context
-- Test activation by referencing files and checking active rules in Cursor
-- For more details, see [Cursor Rules Documentation](https://docs.cursor.com/en/context/rules)
+- When multiple nested rules apply, Cursor will combine them in context.
+- Test activation by referencing files in the subdirectory and checking active rules.
+- For background reading, see [Nested rules](https://docs.cursor.com/en/context/rules#nested-rules).

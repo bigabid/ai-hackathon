@@ -1,132 +1,50 @@
 ---
-description: Guidelines for executing and maintaining task lists derived from a PRD with one-task-at-a-time approach
+description: Guidelines for managing task lists in markdown files to track progress on completing a PRD
 globs: tasks/**/*.md
 alwaysApply: false
 ---
+
 # Task List Management
+## Task Implementation
+- **One sub-task at a time:** Do **NOT** start the next sub‑task until you ask the user for permission and they say "yes" or "y"
+- **Completion protocol:**  
+  1. When you finish a **sub‑task**, immediately mark it as completed by changing `[ ]` to `[x]`.
+  2. If **all** subtasks underneath a parent task are now `[x]`, follow this sequence:
+    - **First**: Run the full test suite (`pytest`, `npm test`, `bin/rails test`, etc.)
+    - **Only if all tests pass**: Stage changes (`git add .`)
+    - **Clean up**: Remove any temporary files and temporary code before committing
+    - **Commit**: Use a descriptive commit message that:
+      - Uses conventional commit format (`feat:`, `fix:`, `refactor:`, etc.)
+      - Summarizes what was accomplished in the parent task
+      - Lists key changes and additions
+      - References the task number and PRD context
+      - **Formats the message as a single-line command using `-m` flags**, e.g.:
 
-Guidelines for executing and maintaining task lists derived from a PRD.
-
-#### Attachment/Trigger Summary
-- Auto-attach when editing or referencing `tasks/**/*.md` files (PRDs and task lists).
-- Manually include `@process-task-list` during implementation to enforce one-task-at-a-time protocol.
-- Works alongside `@project-planning`, and `@browser-mcp-testing`.
-- Enforce Git usage: repo initialized, feature branches, commits, PRs, squash-merge.
-
-## Principles (Cursor Best Practices)
-
-- One sub‑task at a time: complete, validate, then proceed.
-- Keep the list as the source of truth: always update after changes.
-- Test early and often: add/adjust tests per sub‑task.
-- Commit with context: conventional commits + concise bullet reasons.
-- Sequential collaboration: during reviews or clarifications, ask one question at a time and wait for acknowledgement before proceeding.
-- MVP-first execution: plan derived from an MVP PRD capped at ~20 key discovery questions; if gaps remain, confirm whether to continue discovery or proceed with documented defaults.
-- Git is mandatory: all implementation must use Git branches, commits, and PRs.
-
-### Why
-- Reduces context loss and merge friction.
-- Enables accurate progress tracking and safer iteration.
-
-## Task Implementation Protocol
-
-1. Pick the next sub‑task
-   - Ensure it has clear acceptance criteria and references PRD IDs (e.g., FR‑3).
-2. Implement
-   - Write code, tests, and docs for this sub‑task only.
-3. Validate locally
-   - Run the relevant tests (unit + integration as applicable).
-4. Update the task list
-   - Mark the sub‑task `[x]` and add any newly discovered follow‑ups.
-5. Pause for approval when required
-   - If collaborating, wait for "yes/y" before starting the next sub‑task.
-   - In discussions, ask one question at a time and wait for the user's response.
-
-### Why
-- Enforces discipline and keeps reviewers synchronized with the actual state.
-
-## Parent Task Completion Protocol
-
-When all subtasks under a parent task are `[x]`:
-
-1. Run full test suite
-   - Use your project's canonical command (e.g., `npm test`, `pytest`).
-2. Stage changes
-   - `git add .`
-3. Clean up
-   - Remove temp files and unused code.
-4. Commit using a single‑line command with `-m` flags
-   - Example:
-     ```
-     git commit -m "feat: implement FR‑3 account linking" -m "- Adds REST handler, service, tests" -m "- Handles edge cases for OAuth timeouts" -m "Related to 2.0 in tasks and PRD"
-     ```
-5. Mark the parent task `[x]`
-   - Push your feature branch and open a PR; use squash-and-merge upon approval.
-
-### Why
-- Ensures stable checkpoints and readable history tied to plan artifacts.
+        ```
+        git commit -m "feat: add payment validation logic" -m "- Validates card type and expiry" -m "- Adds unit tests for edge cases" -m "Related to T123 in PRD"
+        ```
+  3. Once all the subtasks are marked completed and changes have been committed, mark the **parent task** as completed.
+- Stop after each sub‑task and wait for the user's go‑ahead.
 
 ## Task List Maintenance
 
-- Update as you work
-  - Mark done items, add follow‑ups, and adjust scope if needed.
-- Maintain the Relevant Files section
-  - For every file created/modified, add a one‑line purpose note and test pairing.
-- Keep traceability
-  - Reference PRD IDs (FR‑x) and link to commits or PRs when available.
+1. **Update the task list as you work:**
+   - Mark tasks and subtasks as completed (`[x]`) per the protocol above.
+   - Add new tasks as they emerge.
 
-### Why
-- Maintains a live map of implementation that others can follow.
+2. **Maintain the "Relevant Files" section:**
+   - List every file created or modified.
+   - Give each file a one‑line description of its purpose.
 
-## Before Starting Work
+## AI Instructions
 
-**CRITICAL: Always ask user about Git before any Git operations.**
+When working with task lists, the AI must:
 
-Ask: "Would you like to use Git for this project? If yes, should I create a new feature branch?"
-
-- **Git Protocol**: Only proceed with Git commands after explicit user confirmation
-- **Branch Strategy**: If on `ai-starter` branch, create new feature branch from `ai-starter`
-- **Project Location**: Always create applications in the root directory, not subdirectories
-- Confirm which sub‑task is next
-- Check prerequisites or dependencies from earlier tasks
-- Ensure acceptance criteria are testable and unambiguous
-
-## After Implementing a Sub‑Task
-
-- Update the task list and pause if required by the collaboration model.
-- If the work uncovered gaps, add them as new items under the appropriate parent.
-
-## Notes
-
-- Prefer colocated tests (e.g., `Component.tsx` with `Component.test.tsx`).
-- Use consistent test commands and avoid interactive prompts in scripts.
-- Keep commits small and scoped to the sub‑task.
-- Do not push directly to `main`; always use PRs with squash-merge.
-
-## Git Workflow (Best Practices)
-
-**ALWAYS ask user before any Git operations: "Would you like to use Git for this project?"**
-
-- **User Confirmation Required**
-  - Never execute Git commands without explicit user permission
-  - Ask about branching strategy if user confirms Git usage
-  - Respect user's choice to skip Git entirely
-
-- **Branching Strategy**
-  - If on `ai-starter` branch: Create feature branch from `ai-starter` (e.g., `feat/soda-timer`)
-  - Use short-lived sub-branches for risky or isolated subtasks
-  - Never commit directly to `ai-starter` or `main`
-
-- **Commits**
-  - Use Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `test:`)
-  - Keep commits small; reference PRD IDs (FR‑x) and task IDs in messages
-  - Example: `feat: implement timer logic (FR-1) - adds countdown and notifications`
-
-- **Project Structure**
-  - For ai-starter repos: Always create applications in subdirectories
-  - For clean repos: Create in root directory when possible
-  - Respect existing project structure and configuration files
-
-- **Pull Requests**
-  - Open a PR per parent task; link requirements and tasks
-  - Include acceptance checklist and testing notes; ensure CI is green
-  - Always squash‑and‑merge with clean summary referencing PRD/tasks
+1. Regularly update the task list file after finishing any significant work.
+2. Follow the completion protocol:
+   - Mark each finished **sub‑task** `[x]`.
+   - Mark the **parent task** `[x]` once **all** its subtasks are `[x]`.
+3. Add newly discovered tasks.
+4. Keep "Relevant Files" accurate and up to date.
+5. Before starting work, check which sub‑task is next.
+6. After implementing a sub‑task, update the file and then pause for user approval.
