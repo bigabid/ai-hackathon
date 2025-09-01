@@ -300,9 +300,16 @@ Do not begin until Phase 2 success criteria are met and the user replies "Go".
    - **Wait for acknowledgement** before proceeding
    - **Pause for approval** when collaborating
 
-### Git Workflow
+### Git Workflow Protocol
+
+**CRITICAL: Always ask user about Git usage before proceeding with any Git commands.**
+
+Ask: "Would you like to use Git for this project? If yes, should I create a new feature branch from the current branch?"
+
+Only proceed with Git commands after explicit user confirmation.
+
 ```bash
-# Create feature branch per parent task
+# If user confirms Git usage and is on ai-starter branch:
 git checkout -b feat/feature-name
 
 # Commit with conventional commits + PRD references
@@ -314,18 +321,52 @@ git commit -m "feat: implement POC (FR-2)" \
 git rebase main
 ```
 
+**Git Branch Strategy:**
+- If on `ai-starter` branch: Always create new feature branch from `ai-starter`
+- Use descriptive branch names: `feat/soda-timer`, `feat/user-authentication`
+- Never commit directly to `ai-starter` or `main`
+
 ## 🛠️ **Development Commands**
 
-### Project Setup
+### Project Setup Protocol
+
+**CRITICAL: Project location depends on the repository type:**
+
+- **ai-starter repos**: Always create applications in subdirectories (e.g., `soda-timer/`)
+- **Clean repos**: Create applications in root directory when possible
+
+**Next.js Root Directory Limitations:**
+`npx create-next-app@latest . --flags` will FAIL if the directory contains:
+- Existing `.cursor/`, `.vscode/`, or other config directories
+- `tasks/`, `rules-directory/` or similar project files
+- Any files that create-next-app considers "conflicting"
+
+**Solution:** Always use subdirectory approach for ai-starter projects.
+
 ```bash
-# Initialize project structure
-mkdir -p src/{poc,demo,core,components,utils} tests/{unit,integration,e2e} storybook/learned-memories
+# For ai-starter projects (ALWAYS use subdirectory)
+npx create-next-app@latest project-name --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --yes
 
-# Setup Storybook documentation mirroring
-node scripts/sync-mdc-to-mdx.js .cursor/rules/learned-memories.mdc storybook/learned-memories
+# For clean repositories (can use root if empty)
+npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --yes
 
-# Start development server
-pnpm dev  # or python3 -m http.server 8080 for static demos
+# Alternative manual setup in root (if needed)
+npm init -y
+npm install next react react-dom
+# ... manual configuration
+```
+
+**Project Structure for ai-starter:**
+```
+ai-hackathon/          # Repository root
+├── .cursor/rules/     # Project rules
+├── .vscode/          # VS Code config  
+├── tasks/            # PRD and task files
+├── rules-directory/  # Rule templates
+└── project-name/     # Application directory
+    ├── src/          # Application source
+    ├── components/   # Shared components
+    └── package.json  # Dependencies
 ```
 
 ### Testing Commands

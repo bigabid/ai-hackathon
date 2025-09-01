@@ -79,10 +79,16 @@ When all subtasks under a parent task are `[x]`:
 
 ## Before Starting Work
 
-- Ensure Git is initialized and you are on a feature branch (e.g., `git init` if needed; `git checkout -b feat/<task>`).
-- Confirm which sub‑task is next.
-- Check prerequisites or dependencies from earlier tasks.
-- Ensure acceptance criteria are testable and unambiguous.
+**CRITICAL: Always ask user about Git before any Git operations.**
+
+Ask: "Would you like to use Git for this project? If yes, should I create a new feature branch?"
+
+- **Git Protocol**: Only proceed with Git commands after explicit user confirmation
+- **Branch Strategy**: If on `ai-starter` branch, create new feature branch from `ai-starter`
+- **Project Location**: Always create applications in the root directory, not subdirectories
+- Confirm which sub‑task is next
+- Check prerequisites or dependencies from earlier tasks
+- Ensure acceptance criteria are testable and unambiguous
 
 ## After Implementing a Sub‑Task
 
@@ -98,18 +104,29 @@ When all subtasks under a parent task are `[x]`:
 
 ## Git Workflow (Best Practices)
 
-- Branching
-  - Create a feature branch per parent task (e.g., `feat/tinder-swipe-ui`).
-  - Use short-lived sub-branches for risky or isolated subtasks.
-- Commits
-  - Use Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `test:`).
-  - Keep commits small; reference PRD IDs (FR‑x) and task IDs in messages.
-- Syncing
-  - No required rebase onto `main` before PR; resolve conflicts in the PR if needed.
-  - Avoid merge commits; PRs will be squash‑merged for a linear history.
-- Pull Requests
-  - Open a PR per parent task; link requirements and tasks.
-  - Include acceptance checklist and testing notes; ensure CI is green.
-- Reviews & Merging
-  - Address feedback with focused commits and keep discussion on the PR.
-  - Always squash‑and‑merge with a clean summary referencing PRD/tasks.
+**ALWAYS ask user before any Git operations: "Would you like to use Git for this project?"**
+
+- **User Confirmation Required**
+  - Never execute Git commands without explicit user permission
+  - Ask about branching strategy if user confirms Git usage
+  - Respect user's choice to skip Git entirely
+
+- **Branching Strategy**
+  - If on `ai-starter` branch: Create feature branch from `ai-starter` (e.g., `feat/soda-timer`)
+  - Use short-lived sub-branches for risky or isolated subtasks
+  - Never commit directly to `ai-starter` or `main`
+
+- **Commits**
+  - Use Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `test:`)
+  - Keep commits small; reference PRD IDs (FR‑x) and task IDs in messages
+  - Example: `feat: implement timer logic (FR-1) - adds countdown and notifications`
+
+- **Project Structure**
+  - For ai-starter repos: Always create applications in subdirectories
+  - For clean repos: Create in root directory when possible
+  - Respect existing project structure and configuration files
+
+- **Pull Requests**
+  - Open a PR per parent task; link requirements and tasks
+  - Include acceptance checklist and testing notes; ensure CI is green
+  - Always squash‑and‑merge with clean summary referencing PRD/tasks
