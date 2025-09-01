@@ -6,7 +6,8 @@ alwaysApply: false
 
 # Task List Management
 ## Task Implementation
-- **One sub-task at a time:** Do **NOT** start the next sub‑task until you ask the user for permission and they say "yes" or "y"
+- **Default cadence:** One sub-task at a time, ask permission before starting the next.
+- **Fast-Track batching (optional):** If the user says "fast" or accepts defaults, you may batch up to 2–3 tightly related sub‑tasks into one execution block. Announce the batch before starting and summarize after.
 - **Completion protocol:**  
   1. When you finish a **sub‑task**, immediately mark it as completed by changing `[ ]` to `[x]`.
   2. If **all** subtasks underneath a parent task are now `[x]`, follow this sequence:
@@ -23,7 +24,8 @@ alwaysApply: false
         ```
         git commit -m "feat: add payment validation logic" -m "- Validates card type and expiry" -m "- Adds unit tests for edge cases" -m "Related to T123 in PRD"
         ```
-  3. Once all the subtasks are marked completed and changes have been committed, mark the **parent task** as completed.
+  3. Milestone commits: For larger features, create intermediate commits after major checkpoints (e.g., scaffold, core logic, QA). Keep commits small and descriptive.
+  4. Once all the subtasks are marked completed and changes have been committed, mark the **parent task** as completed.
 - Stop after each sub‑task and wait for the user's go‑ahead.
 
 ## Task List Maintenance

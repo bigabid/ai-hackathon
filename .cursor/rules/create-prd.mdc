@@ -14,9 +14,10 @@ To guide an AI assistant in creating a detailed Product Requirements Document (P
 
 1.  **Receive Initial Prompt:** The user provides a brief description or request for a new feature or functionality.
 2.  **Ask Clarifying Questions:** Before writing the PRD, the AI *must* ask clarifying questions to gather sufficient detail. The goal is to understand the "what" and "why" of the feature, not necessarily the "how" (which the developer will figure out). Make sure to provide options in letter/number lists so I can respond easily with my selections.
-3. **Sequential questioning** - ask one question, wait for answer
+3. **Sequential questioning (default)** - ask one question, wait for answer
+   - Fast-Track: If the user writes "fast", "move quick", or accepts defaults, batch up to 3 related questions per turn with default suggestions and proceed on "choose for me" without pausing.
 4. **Multiple-choice questions** - present options a,b,c,d... or "choose for me". If you choose for the user, state your selection and a brief rationale; the user can accept or change it.
-5. **Max 10 questions** for MVP scope, after 10 questions, ask the user if he wants to continue with the next 10 
+5. **Max 10 questions** for MVP scope, after 10 questions, ask the user if he wants to continue with the next 10. In Fast-Track, aim for ≤5.
 6.  **Generate PRD:** Based on the initial prompt and the user's answers to the clarifying questions, generate a PRD using the structure outlined below.
 7.  **Save PRD:** Save the generated document as `prd-[feature-name].md` inside the `/tasks` directory.
 
@@ -33,7 +34,7 @@ The AI should adapt its questions based on the prompt, but here are some common 
 *   **Data Requirements:** "What kind of data does this feature need to display or manipulate?"
 *   **Design/UI:** "Are there any existing design mockups or UI guidelines to follow?" or "Can you describe the desired look and feel?"
 *   **Edge Cases:** "Are there any potential edge cases or error conditions we should consider?"
-*   **Technology Stack Discovery :** "define together with the developer the technological stack"
+*   **Technology Stack Discovery (REQUIRED EARLY):** Propose a default stack based on project norms; ask for confirmation with 2–3 options. If no response after one turn and user said "fast" or accepts defaults, proceed with the recommended stack and note assumptions.
 
 ## PRD Structure
 
