@@ -11,14 +11,14 @@ Follow this checklist to implement the PRD in `/tasks/prd-mraid-tinder-swipe-ad.
   - [x] `creative/config.json` (embedded at build for MVP)
 
 ### 1. MRAID Integration
-- [ ] Add robust MRAID bootstrap
-  - [ ] Detect `window.mraid`, wait for `ready`, set fallback timeout (~750ms)
-  - [ ] Subscribe to `stateChange`, `sizeChange`, `viewableChange`, `error`
-  - [ ] Implement `open`, `expand`, `close` wrappers
-- [ ] Handle states and placement types
-  - [ ] Respect `default`, `expanded`, `hidden` states
-  - [ ] Visible close in `expanded`
-- [ ] Graceful no‑MRAID fallback path enabled
+- [x] Add robust MRAID bootstrap
+  - [x] Detect `window.mraid`, wait for `ready`, set fallback timeout (~750ms)
+  - [x] Subscribe to `stateChange`, `sizeChange`, `viewableChange`, `error`
+  - [x] Implement `open`, `expand`, `close` wrappers
+- [x] Handle states and placement types
+  - [x] Respect `default`, `expanded`, `hidden` states
+  - [x] Visible close in `expanded`
+- [x] Graceful no‑MRAID fallback path enabled
 
 ### 2. Swipeable Card Deck
 - [x] Implement deck with 3–6 cards (configurable)
@@ -44,19 +44,19 @@ Follow this checklist to implement the PRD in `/tasks/prd-mraid-tinder-swipe-ad.
 - [x] Impression beacon on first viewable (or first render if no signal)
 - [x] Swipe-left and swipe-right events per card
 - [x] Click events per card
-- [ ] Macro placeholders support (e.g., `{CLICK_URL}`, `{CACHEBUSTER}`)
-- [ ] Debounce and error-safe beacon sending
+- [x] Macro placeholders support (e.g., `{CLICK_URL}`, `{CACHEBUSTER}`)
+- [x] Debounce and error-safe beacon sending
 
 ### 6. Layout & Responsiveness
-- [ ] Portrait-optimized layouts: 300×250, 320×480, 320×50 (letterbox), expanded
-- [ ] Respect `mraid.getMaxSize()` and safe areas (notch)
+- [x] Portrait-optimized layouts: 300×250, 320×480, 320×50 (letterbox), expanded
+- [x] Respect `mraid.getMaxSize()` and safe areas (notch)
 - [ ] Orientation lock to portrait (MVP)
 
 ### 7. Controls & Compliance
 - [x] Always-visible close (top-right; ≥44×44 dp)
-- [ ] Reserve space for AdChoices/Privacy icon to avoid overlap
+- [x] Reserve space for AdChoices/Privacy icon to avoid overlap
 - [x] No auto-audio; future video starts muted, user-initiated sound only
-- [ ] Accessibility: contrast ≥ 4.5:1; focus states; aria labels for CTA/close
+- [x] Accessibility: contrast ≥ 4.5:1; focus states; aria labels for CTA/close
 
 ### 8. Fallback (Non‑MRAID)
 - [ ] If no MRAID after timeout: render first card, disable gestures
@@ -75,14 +75,14 @@ Follow this checklist to implement the PRD in `/tasks/prd-mraid-tinder-swipe-ad.
 
 ### 11. Packaging & Delivery
 - [ ] Single HTML bundle (inline CSS/JS where allowed) or zipped package
-- [ ] Update README with trafficking notes and macro support
+- [x] Update README with trafficking notes and macro support
 - [ ] Generate final asset manifest and size report
 
 ### 12. Documentation
-- [ ] `README.md` with:
-  - [ ] Implementation overview and config schema
-  - [ ] Packaging/traffic instructions and size constraints
-  - [ ] QA checklist and troubleshooting
+- [x] `README.md` with:
+  - [x] Implementation overview and config schema
+  - [x] Packaging/traffic instructions and size constraints
+  - [x] QA checklist and troubleshooting
 
 ---
 

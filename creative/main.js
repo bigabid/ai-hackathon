@@ -13,16 +13,35 @@
     mraidTimeoutId: null
   };
 
+  const firedEventKeys = new Set();
+
+  function replaceMacros(url, extra) {
+    const base = {
+      CACHEBUSTER: cachebuster()
+    };
+    const macros = Object.assign({}, base, extra || {});
+    return String(url).replace(/\{([A-Z0-9_]+)\}/g, (m, key) => {
+      return Object.prototype.hasOwnProperty.call(macros, key) ? String(macros[key]) : m;
+    });
+  }
+
   function cachebuster() { return String(Date.now()) + Math.floor(Math.random() * 100000); }
-  function firePixels(urls) {
+  function firePixels(urls, extraMacros) {
     if (!urls || !urls.length) return;
     urls.forEach(url => {
-      const u = url.replace('{CACHEBUSTER}', cachebuster());
+      const u = replaceMacros(url, extraMacros);
       const img = new Image();
       img.decoding = 'async';
       img.referrerPolicy = 'no-referrer-when-downgrade';
       img.src = u;
     });
+  }
+
+  function sendPixelsOnce(eventKey, urls, extraMacros) {
+    if (firedEventKeys.has(eventKey)) return;
+    firedEventKeys.add(eventKey);
+    // Debounce microtask to coalesce multiple calls in same tick
+    setTimeout(() => firePixels(urls, extraMacros), 0);
   }
 
   function mraidOpen(url) {
@@ -50,12 +69,12 @@
       // Impression on viewable or immediate fallback
       if (window.mraid && state.mraidReady) {
         if (window.mraid.isViewable && window.mraid.isViewable()) {
-          firePixels(cfg?.tracking?.impression);
+          sendPixelsOnce('impression', cfg?.tracking?.impression);
         } else {
-          document.addEventListener('mraidViewable', () => firePixels(cfg?.tracking?.impression), { once: true });
+          document.addEventListener('mraidViewable', () => sendPixelsOnce('impression', cfg?.tracking?.impression), { once: true });
         }
       } else {
-        firePixels(cfg?.tracking?.impression);
+        sendPixelsOnce('impression', cfg?.tracking?.impression);
       }
     });
   }
@@ -74,7 +93,8 @@
     function handler() {
       const card = currentCard();
       const url = card?.ctaUrl || 'https://example.com';
-      firePixels(state.config?.tracking?.click);
+      const key = `click-${state.currentIndex}`;
+      sendPixelsOnce(key, state.config?.tracking?.click);
       mraidOpen(url);
     }
     cta.addEventListener('click', handler);
@@ -198,7 +218,8 @@
   function onCardDismissed(dir) {
     const cards = state.config.cards;
     const track = dir === 'right' ? state.config?.tracking?.swipeRight : state.config?.tracking?.swipeLeft;
-    firePixels(track);
+    const key = `${dir}-${state.currentIndex}`;
+    sendPixelsOnce(key, track);
 
     state.currentIndex += 1;
     if (state.currentIndex >= cards.length) {
@@ -268,17 +289,34 @@
         document.dispatchEvent(ev);
       });
       window.mraid.addEventListener('stateChange', () => {});
-      window.mraid.addEventListener('sizeChange', () => {});
+      window.mraid.addEventListener('sizeChange', () => { updateLayout(); });
       window.mraid.addEventListener('error', () => {});
     } catch (_) {}
     onReady();
+    updateLayout();
   }
 
   // Kickoff
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     initMraid();
+    window.addEventListener('resize', updateLayout, { passive: true });
   } else {
-    document.addEventListener('DOMContentLoaded', initMraid);
+    document.addEventListener('DOMContentLoaded', () => { initMraid(); window.addEventListener('resize', updateLayout, { passive: true }); });
+  }
+
+  function updateLayout() {
+    const root = qs('#ad-root');
+    if (!root) return;
+    const w = window.innerWidth || root.clientWidth;
+    const h = window.innerHeight || root.clientHeight;
+    root.classList.remove('banner-mode', 'portrait-mode', 'rectangle-mode');
+    if (h <= 90) {
+      root.classList.add('banner-mode');
+    } else if (h >= 380 && (h / Math.max(1, w)) > 0.9) {
+      root.classList.add('portrait-mode');
+    } else {
+      root.classList.add('rectangle-mode');
+    }
   }
 })();
 

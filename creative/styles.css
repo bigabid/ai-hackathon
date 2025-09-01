@@ -1,5 +1,6 @@
 /* Base layout */
 .ad-root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #0f0f10; color: #fff; font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+.adchoices-space { position: absolute; top: env(safe-area-inset-top, 6px); right: calc(env(safe-area-inset-right, 6px) + 46px); width: 26px; height: 26px; z-index: 9; }
 .btn-close { position: absolute; top: env(safe-area-inset-top, 8px); right: env(safe-area-inset-right, 8px); z-index: 10; width: 44px; height: 44px; border: none; border-radius: 22px; background: rgba(0,0,0,0.5); color: #fff; font-size: 24px; line-height: 44px; text-align: center; cursor: pointer; }
 .btn-close:focus { outline: 2px solid #fff; outline-offset: 2px; }
 
@@ -20,5 +21,17 @@
 
 /* Utility */
 .hidden { display: none !important; }
+
+/* Responsiveness */
+.ad-root.banner-mode .deck { display: none; }
+.ad-root.banner-mode .cta { bottom: 8px; min-width: 60%; height: 36px; border-radius: 18px; font-size: 13px; }
+
+.ad-root.rectangle-mode .card { width: 92%; height: 82%; }
+.ad-root.portrait-mode .card { width: 88%; height: 78%; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .card, .cta, .btn-close { transition: none !important; animation: none !important; }
+}
 
 
