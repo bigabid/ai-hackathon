@@ -10,7 +10,7 @@ Guidelines for executing and maintaining task lists derived from a PRD.
 #### Attachment/Trigger Summary
 - Auto-attach when editing or referencing `tasks/**/*.md` files (PRDs and task lists).
 - Manually include `@process-task-list` during implementation to enforce one-task-at-a-time protocol.
-- Works alongside `@project-planning`, `@memory`, and `@mcp-browser-testing`.
+- Works alongside `@project-planning`, and `@browser-mcp-testing`.
  - Enforce Git usage: repo initialized, feature branches, commits, PRs, squash-merge.
 
 ## Principles (Cursor Best Practices)
