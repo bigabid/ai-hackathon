@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "cards": [
+    {
+      "id": "app-529479190",
+      "headline": "Clash of Clans",
+      "subcopy": "Join millions of players worldwide as you build your village, raise a clan, and compete in epic Clan Wars!",
+      "image": "assets/clash_of_clans.jpg",
+      "ctaText": "Install",
+      "clickthroughUrl": "https://apps.apple.com/us/app/clash-of-clans/id529479190?uo=4"
+    },
+    {
+      "id": "app-1517783697",
+      "headline": "Genshin Impact",
+      "subcopy": "Step into Teyvat, a vast world teeming with life and flowing with elemental energy.",
+      "image": "assets/genshin_impact.jpg",
+      "ctaText": "Install",
+      "clickthroughUrl": "https://apps.apple.com/us/app/genshin-impact/id1517783697?uo=4"
+    },
+    {
+      "id": "app-512939461",
+      "headline": "Subway Surfers",
+      "subcopy": "DASH as fast as you can!",
+      "image": "assets/subway_surfers.jpg",
+      "ctaText": "Install",
+      "clickthroughUrl": "https://apps.apple.com/us/app/subway-surfers/id512939461?uo=4"
+    }
+  ],
+  "theme": {
+    "primaryColor": "#0055FF",
+    "ctaTextColor": "#FFFFFF",
+    "backgroundColor": "#000000"
+  }
+}

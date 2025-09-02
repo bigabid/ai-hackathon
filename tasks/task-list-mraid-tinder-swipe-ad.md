@@ -1,97 +1,91 @@
-## Task List – Tinder-style Swipeable Multi-Card MRAID Ad
+### Task List — MRAID Tinder-Style Swipe Interstitial Ad
 
-Follow this checklist to implement the PRD in `/tasks/prd-mraid-tinder-swipe-ad.md`.
+Parent PRD: `tasks/prd-mraid-tinder-swipe-ad.md`
 
-### 0. Setup
-- [x] Create feature folder and boilerplate files
-  - [x] `creative/index.html`
-  - [x] `creative/styles.css`
-  - [x] `creative/main.js`
-  - [x] `creative/assets/` (images, icons)
-  - [x] `creative/config.json` (embedded at build for MVP)
+Follow the cadence: one sub-task at a time. After finishing a sub-task, mark `[x]`, update Relevant Files, then pause for approval before starting the next.
 
-### 1. MRAID Integration
-- [x] Add robust MRAID bootstrap
-  - [x] Detect `window.mraid`, wait for `ready`, set fallback timeout (~750ms)
-  - [x] Subscribe to `stateChange`, `sizeChange`, `viewableChange`, `error`
-  - [x] Implement `open`, `expand`, `close` wrappers
-- [x] Handle states and placement types
-  - [x] Respect `default`, `expanded`, `hidden` states
-  - [x] Visible close in `expanded`
-- [x] Graceful no‑MRAID fallback path enabled
+---
 
-### 2. Swipeable Card Deck
-- [x] Implement deck with 3–6 cards (configurable)
-  - [x] Render stack with depth, shadows, peek of next cards
-  - [x] Top card drag with pointer/touch events (passive listeners)
-  - [x] Physics/threshold (≥25% width or velocity) for left/right dismiss
-  - [x] 60fps transforms (`translate3d`, `will-change`), `requestAnimationFrame`
-  - [x] Animate next card into place after dismissal
-  - [x] End card after final swipe
+## 1) Scaffold creative project structure
+- [x] Create directories: `creative/`, `creative/assets/`
+- [x] Add `creative/index.html` (MRAID-safe boilerplate, portrait meta, minimal DOM root)
+- [x] Add `creative/styles.css` (variables for theme, base layout, card styles)
+- [x] Add `creative/main.js` (entry, feature flags, init)
+- [x] Add `creative/manifest.json` (local packaged content reflecting PRD schema)
+- [x] Add `creative/mraid-shim.js` (local preview: `open` → `window.open`, safe no-ops)
 
-### 3. Content Config & Assets
-- [x] Define embedded `config.json` schema (cards, copy, CTA, URLs, pixels)
-- [ ] Implement loader/validator for config
-- [x] Prefetch top 2–3 card images; lazy-load remaining upon viewable
-- [ ] Use WebP/AVIF with PNG/JPEG fallback
+## 2) MRAID readiness and orientation
+- [ ] Wait for `mraid.ready` or fallback if `window.mraid` absent
+- [ ] `mraid.setOrientationProperties({ allowOrientationChange: false, forceOrientation: 'portrait' })`
+- [ ] Use `mraid.getMaxSize()` / `getScreenSize()` to size creative
+- [ ] Handle `viewableChange` and `stateChange` (pause/resume animations)
 
-### 4. CTAs & Navigation
-- [x] Primary CTA per card (≥44×44 dp) wired to `mraid.open(url)`
-- [x] Cachebuster and click tracking fired before `open`
-- [x] Optional secondary action (defer to v2) – ensure out of scope for MVP
+## 3) Card stack rendering and progress UI
+- [ ] Parse `manifest.json` safely (validate required fields)
+- [ ] Render N-card stack (image, headline, subcopy, CTA)
+- [ ] Depth/parallax styling for underlying cards
+- [ ] Progress indicator (dots or “x of y”)
 
-### 5. Tracking & Analytics
-- [x] Impression beacon on first viewable (or first render if no signal)
-- [x] Swipe-left and swipe-right events per card
-- [x] Click events per card
-- [x] Macro placeholders support (e.g., `{CLICK_URL}`, `{CACHEBUSTER}`)
-- [x] Debounce and error-safe beacon sending
+## 4) Gestures and thresholds
+- [ ] Implement touch/pointer handlers using GPU transforms
+- [ ] Right-swipe threshold/velocity → clickthrough; advance stack
+- [ ] Left-swipe threshold/velocity → dismiss; advance stack
+- [ ] Tap CTA → same as right-swipe
+- [ ] Snap-back animation for canceled swipes
 
-### 6. Layout & Responsiveness
-- [x] Portrait-optimized layouts: 300×250, 320×480, 320×50 (letterbox), expanded
-- [x] Respect `mraid.getMaxSize()` and safe areas (notch)
-- [ ] Orientation lock to portrait (MVP)
+## 5) Clickthrough and end-card
+- [ ] `mraid.open(clickthroughUrl)` on positive intent or CTA
+- [ ] End-card after last item with persistent CTA and close affordance
+- [ ] Respect container close (no custom close unless required)
 
-### 7. Controls & Compliance
-- [x] Always-visible close (top-right; ≥44×44 dp)
-- [x] Reserve space for AdChoices/Privacy icon to avoid overlap
-- [x] No auto-audio; future video starts muted, user-initiated sound only
-- [x] Accessibility: contrast ≥ 4.5:1; focus states; aria labels for CTA/close
+## 6) Performance and accessibility
+- [ ] 60 FPS target: `requestAnimationFrame`, avoid layout thrash
+- [ ] Use `will-change`, `transform`, and `opacity` transitions
+- [ ] Minimum 44×44 px tap targets; high-contrast CTA
+- [ ] Reduced motion preference fallback
 
-### 8. Fallback (Non‑MRAID)
-- [ ] If no MRAID after timeout: render first card, disable gestures
-- [ ] Tap anywhere opens landing page via `window.open`
+## 7) Packaging and QA
+- [ ] Ensure no external network calls (assets + manifest packaged)
+- [ ] Validate weight budgets (JS/CSS/HTML) and total ZIP size
+- [ ] Provide local preview instructions (no-MRAID mode)
+- [ ] Prepare final ZIP with `creative/` content
 
-### 9. Performance Budget
-- [ ] Initial payload ≤ 2.5 MB; polite assets ≤ +1.5 MB
-- [ ] First interactive ≤ 1.5s on LTE median
-- [ ] Avoid layout thrash; audit with DevTools performance
+## 8) Optional: local analytics counters (QA only)
+- [ ] In-memory counters for impressions, swipes, clicks
+- [ ] Toggle via feature flag; no beacons by default
 
-### 10. QA & Validation
-- [ ] Cross‑SDK sanity: GAM/Ad Manager, MoPub/Ironsource, AppLovin, Amazon
-- [ ] iOS 14–18 Safari webviews; Android 9–14 WebView/Chrome
-- [ ] Verify sizes: 300×250, 320×480, 320×50 (letterbox), expanded
-- [ ] Validate beacons fire exactly once per event; verify macros replaced
+## 9) Compliance checks
+- [ ] Cross-network sanity check (MRAID 2.0 behaviors)
+- [ ] Verify orientation lock and close behavior
 
-### 11. Packaging & Delivery
-- [ ] Single HTML bundle (inline CSS/JS where allowed) or zipped package
-- [x] Update README with trafficking notes and macro support
-- [ ] Generate final asset manifest and size report
+## 10) Final polish
+- [ ] Code cleanup, comments where non-obvious
+- [ ] Light lint/format pass
+- [ ] README snippet for traffickers
 
-### 12. Documentation
-- [x] `README.md` with:
-  - [x] Implementation overview and config schema
-  - [x] Packaging/traffic instructions and size constraints
-  - [x] QA checklist and troubleshooting
+---
+
+### Completion protocol (applies when all subtasks in a parent task are done)
+1. Run tests if present (or run a smoke build/preview).
+2. Stage changes: `git add .`
+3. Clean up temporary code/files.
+4. Commit using conventional format (single line command with multiple `-m` flags), e.g.:
+   ```
+   git commit -m "feat: scaffold MRAID Tinder interstitial creative" -m "- Adds index.html/styles.css/main.js/manifest.json" -m "- Includes MRAID readiness and portrait lock" -m "Related to PRD: prd-mraid-tinder-swipe-ad"
+   ```
 
 ---
 
 ### Relevant Files (keep updated)
-- `creative/index.html` – Ad markup, container elements
-- `creative/styles.css` – Layout, animations, accessibility styles
-- `creative/main.js` – MRAID integration, deck logic, tracking
-- `creative/config.json` – Cards, URLs, tracking endpoints (embedded at build)
-- `creative/assets/*` – Images/icons (WebP/AVIF with fallbacks)
-- `README.md` – Trafficking & QA guide
+- [ ] `creative/index.html` — Interstitial HTML and base structure
+- [ ] `creative/styles.css` — Theme variables and layout
+- [ ] `creative/main.js` — Init, MRAID lifecycle, gestures, flow
+- [x] `creative/manifest.json` — Packaged content config (updated with real game data)
+- [ ] `creative/mraid-shim.js` — Local preview shim
+- [ ] `tasks/prd-mraid-tinder-swipe-ad.md` — Source PRD
+- [x] `tasks/task-list-mraid-tinder-swipe-ad.md` — This file
+- [x] `creative/assets/clash_of_clans.jpg` — Game artwork
+- [x] `creative/assets/genshin_impact.jpg` — Game artwork
+- [x] `creative/assets/subway_surfers.jpg` — Game artwork
 
 
